@@ -1,0 +1,31 @@
+﻿@implements IDialogContentComponent<VacationItem>
+
+
+<FluentStack Orientation="Orientation.Vertical">
+    <FluentLabel>@Content.Date.ToLongDateString()</FluentLabel>
+
+    <FluentRadioGroup @bind-Value=Content.ItemType>
+        <FluentRadio Value="VacationItemType.Regular">Отпуск</FluentRadio>
+        <FluentRadio Value="VacationItemType.DonorDay">Донорские дни</FluentRadio>
+        <FluentRadio Value="VacationItemType.NonPayed">Отгул за свой счёт</FluentRadio>
+    </FluentRadioGroup>
+
+    <FluentSwitch @bind-value=Content.Cancelled>Отменён\перенесён</FluentSwitch>
+
+
+    <FluentStack Orientation="Orientation.Horizontal">
+        <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="@(async _=> await Dialog.CloseAsync(true))">Удалить</FluentButton>
+        <FluentButton Appearance="Appearance.Accent" OnClick="@(async _=> await Dialog.CloseAsync(Content))">Сохранить</FluentButton>
+    </FluentStack>
+
+</FluentStack>
+
+
+@code {
+    [Parameter]
+    public VacationItem Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog? Dialog { get; set; }
+
+}

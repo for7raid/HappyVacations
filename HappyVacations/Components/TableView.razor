@@ -1,0 +1,109 @@
+﻿<div class="valcation-table">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Месяц</th>
+                <th></th>
+                <th></th>
+
+                @for (var item = Start; item <= End; item = item.AddMonths(1))
+                {
+                    <th colspan="@DateTime.DaysInMonth(item.Year, item.Month)">@item.ToString("MMMM")</th>
+                }
+            </tr>
+            <tr>
+
+                <th>Имя</th>
+                <th>Роль</th>
+                <th>Дней</th>
+                <th>Инд</th>
+                @for (var item = Start; item <= End; item = item.AddDays(1))
+                {
+                    <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Employees.OrderBy(e => e.Role).ThenBy(e => e.Name))
+            {
+                <tr>
+
+                    <td>@employee.Name <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" /> </td>
+                    <td>@employee.Role</td>
+
+                    @for (var item = Start; item <= End; item = item.AddDays(1))
+                    {
+
+                        var day = employee.Items.FirstOrDefault(i => i.Date.Date == item.Date);
+                        var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
+
+
+                        <td class="@GetCellClass(day)" @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple))>
+
+                            @if (day is not null)
+                            {
+                                <strong>@day</strong>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@inject IDialogService DialogService
+
+@code {
+    [Parameter]
+    public List<Employee> Employees { get; set; } = default!;
+
+    [Parameter]
+    public IEnumerable<CalendarException> CalendarExceptions { get; set; } = Array.Empty<CalendarException>();
+
+    [Parameter]
+    public DateTime Start { get; set; } = default!;
+
+    [Parameter]
+    public DateTime End { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<Employee> EditEmployee { get; set; }
+
+    [Parameter]
+    public EventCallback<Tuple<Employee, DateTime>> EditDateCell { get; set; }
+
+    string GetHeaderCellClass(DateTime date)
+    {
+        var exception = CalendarExceptions.FirstOrDefault(d => d.Date.Date == date.Date);
+
+        if (exception is not null)
+        {
+            return exception.ExceptionType == CalendarExceptionType.Weekend ? "weekend" : string.Empty;
+        }
+
+        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+        {
+            return "weekend";
+        }
+
+        return string.Empty;
+    }
+
+    string GetCellClass(VacationItem? item)
+    {
+        if (item is not null)
+        {
+            if (item.Cancelled)
+            {
+                return string.Empty;
+            }
+
+            return item.ItemType.ToString();
+        }
+
+        return string.Empty;
+    }
+
+}

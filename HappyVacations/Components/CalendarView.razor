@@ -1,0 +1,94 @@
+﻿<div>
+    <label for="people-listbox">Сотрудник</label>
+    <FluentSelect TOption="Employee"
+                  Items="@Employees"
+                  Id="people-listbox"
+                  Width="200px"
+                  Height="250px"
+                  OptionValue="@(p => p.Id)"
+                  OptionText="@(p => p.Name)"
+                  @bind-SelectedOption="@SelectedEmployee" />
+
+    @if (SelectedEmployee is not null)
+    {
+        <FluentStack Wrap=true>
+            @for (var item = Start; item <= End; item = item.AddMonths(1))
+            {
+                <FluentCalendar PickerMonth="item"
+                        ValueChanged="@(async v=> await EditDateCell.InvokeAsync(new Tuple<Employee, DateTime>(SelectedEmployee, v.Value)))">
+                    <DaysTemplate>
+                        <span class="@GetCellClass(context.Date)">
+                            @context.DayNumber
+                        </span>
+                    </DaysTemplate>
+                </FluentCalendar>
+            }
+        </FluentStack>
+    }
+
+</div>
+
+@inject IDialogService DialogService
+
+@code {
+    [Parameter]
+    public List<Employee> Employees { get; set; } = default!;
+
+    public Employee? SelectedEmployee { get; set; }
+
+    [Parameter]
+    public IEnumerable<CalendarException> CalendarExceptions { get; set; } = Array.Empty<CalendarException>();
+
+    [Parameter]
+    public DateTime Start { get; set; } = default!;
+
+    [Parameter]
+    public DateTime End { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<Tuple<Employee, DateTime>> EditDateCell { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            SelectedEmployee = Employees.FirstOrDefault();
+            StateHasChanged();
+        }
+    }
+
+    string GetCellClass(DateTime date)
+    {
+        var exception = CalendarExceptions.FirstOrDefault(d => d.Date.Date == date.Date);
+        var item = SelectedEmployee!.Items.FirstOrDefault(i => i.Date.Date == date.Date);
+
+        var className = string.Empty;
+
+        if (item is not null)
+        {
+            if (item.Cancelled)
+            {
+                className += " cancelled ";
+            }
+            else
+            {
+                className = className + " " + item.ItemType.ToString() + " ";
+            }
+
+        }
+
+        if (exception is not null)
+        {
+            return exception.ExceptionType == CalendarExceptionType.Weekend ? "weekend" : string.Empty;
+        }
+
+        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+        {
+            return "weekend";
+        }
+
+        return className;
+    }
+
+}
