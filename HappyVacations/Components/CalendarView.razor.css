@@ -8,6 +8,10 @@
 }
 
 
-.fluent-calendar div[part=day] . NonPayed {
+.fluent-calendar div[part=day] .NonPayed {
     background: gray;
+}
+
+.fluent-calendar span[part=move] {
+    display: none !important;
 }

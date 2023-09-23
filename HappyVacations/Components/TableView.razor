@@ -18,42 +18,77 @@
                 <th>Роль</th>
                 <th>Дней</th>
                 <th>Инд</th>
-                @for (var item = Start; item <= End; item = item.AddDays(1))
+                @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                 {
                     <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (var employee in Employees.OrderBy(e => e.Role).ThenBy(e => e.Name))
+
+            @foreach (var role in Employees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
             {
-                <tr>
 
-                    <td>@employee.Name <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" /> </td>
-                    <td>@employee.Role</td>
-
-                    @for (var item = Start; item <= End; item = item.AddDays(1))
-                    {
-
-                        var day = employee.Items.FirstOrDefault(i => i.Date.Date == item.Date);
-                        var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
+                @foreach (var employee in role)
+                {
 
 
-                        <td class="@GetCellClass(day)" @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple))>
+                    <tr>
 
-                            @if (day is not null)
-                            {
-                                <strong>@day</strong>
-                            }
-                        </td>
-                    }
-                </tr>
+                        <td>@employee.Name <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" /> </td>
+
+                        <td>@employee.Role</td>
+                        <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
+                        <td>@VacationCalculatorService.SalaryIndex(employee, Start, End, CalendarExceptions).ToString("0.00")</td>
+
+
+                        @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                        {
+
+                            var day = employee.Items.FirstOrDefault(i => i.Date.Date == item);
+                            var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
+                            var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
+
+                            <td class="@GetCellClass(day) @(error.HasError ? " error":"")" @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
+
+                                @if (day is not null)
+                                {
+                                    <strong>@day</strong>
+                                }
+                            </td>
+                        }
+                    </tr>
+
+                }
+
+                @if (role.Count() > 1)
+                {
+                    <tr>
+                        <td></td>
+                        <td style="font-style:italic">Пересечения</td>
+                        <td></td>
+                        <td></td>
+
+                        @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                        {
+
+                            var count = role.Count(e => e.Items.Any(i => i.Date.Date == item && !i.Cancelled && i.ItemType == VacationItemType.Regular));
+
+                            <td class="warning-@count">
+                                @(count > 1 ? count.ToString() : string.Empty)
+                            </td>
+                        }
+
+                    </tr>
+                }
+
             }
         </tbody>
     </table>
 </div>
 
 @inject IDialogService DialogService
+@inject VacationCalculatorService VacationCalculatorService
 
 @code {
     [Parameter]

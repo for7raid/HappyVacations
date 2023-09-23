@@ -1,0 +1,103 @@
+﻿@page "/calendar"
+
+<h3>Исключения в рабочих днях</h3>
+
+
+<FluentSelect @bind-SelectedOption=@year TOption="int"
+              Items="Enumerable.Range(2022, 10)" />
+
+<FluentStack Wrap=true HorizontalGap="50" VerticalGap="50" >
+    @for (int i = 1; i <= 12; i++)
+    {
+        <FluentCalendar PickerMonth="@(new DateTime(year, i, 1))"
+                    ValueChanged="OnDateChanged">
+            <DaysTemplate>
+                <span class="@GetCellClass(context.Date)">
+                    @context.DayNumber
+                </span>
+            </DaysTemplate>
+        </FluentCalendar>
+    }
+</FluentStack>
+
+
+<style>
+    .fluent-calendar div[part=day] .holiday {
+        color: pink;
+        font-weight: 600;
+    }
+
+    .fluent-calendar div[part=day] .workday {
+        font-weight: 600;
+    }
+
+    .fluent-calendar span[part=move] {
+        display: none !important;
+    }
+</style>
+
+@inject IDialogService DialogService
+@inject IRepository repository
+
+@code {
+    int year = DateTime.Now.Year;
+
+    public List<CalendarException> CalendarExceptions { get; set; }
+
+
+    CalendarException? selectedCalendarException;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        CalendarExceptions = await repository.GetCalendarExpeptions();
+    }
+
+    string GetCellClass(DateTime date)
+    {
+        var exception = CalendarExceptions.FirstOrDefault(d => d.Date.Date == date.Date);
+
+
+        var className = string.Empty;
+
+        if (exception is not null)
+        {
+            return exception.ExceptionType == CalendarExceptionType.Weekend ? "holiday" : "workday";
+        }
+
+        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+        {
+            return "weekend";
+        }
+
+        return className;
+    }
+
+    async Task OnDateChanged(DateTime? date)
+    {
+        var exception = CalendarExceptions.FirstOrDefault(d => d.Date.Date == date.Value.Date);
+
+        if (exception is null)
+        {
+            exception = new CalendarException
+                {
+                    Date = date.Value.Date,
+                    ExceptionType = date.Value.DayOfWeek == DayOfWeek.Sunday || date.Value.Date.DayOfWeek == DayOfWeek.Saturday ? CalendarExceptionType.Workday : CalendarExceptionType.Weekend
+                };
+
+            CalendarExceptions.Add(exception);
+            await repository.SaveCalendarException(exception);
+        }
+        else
+        {
+            await repository.RemoveCalendarException(exception);
+            if (CalendarExceptions.Contains(exception))
+            {
+                CalendarExceptions.Remove(exception);
+            }
+        }
+    }
+
+
+}

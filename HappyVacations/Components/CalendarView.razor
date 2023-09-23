@@ -11,7 +11,7 @@
 
     @if (SelectedEmployee is not null)
     {
-        <FluentStack Wrap=true>
+        <FluentStack Wrap=true HorizontalGap="50" VerticalGap="50">
             @for (var item = Start; item <= End; item = item.AddMonths(1))
             {
                 <FluentCalendar PickerMonth="item"
