@@ -1,14 +1,16 @@
 ﻿@inject NavigationManager navigationmanager
 
-<h1 class="head">FluentUI Web Components</h1>
-<ul>
-    <li>
-        <FluentAnchor Href="counter" Appearance=@SetAppearance("Counter")>Counter</FluentAnchor>
-    </li>
-    <li>
-        <FluentAnchor Href="fetchdata" Appearance=@SetAppearance("FetchData")>Fetch Data</FluentAnchor>
-    </li>
-</ul>
+<div class="navigation">
+    <h1 class="head">Детали</h1>
+    <ul>
+        <li>
+            <FluentAnchor Href="counter" Appearance=@SetAppearance("Counter")>Counter</FluentAnchor>
+        </li>
+        <li>
+            <FluentAnchor Href="fetchdata" Appearance=@SetAppearance("FetchData")>Fetch Data</FluentAnchor>
+        </li>
+    </ul>
+</div>
 
 @code {
     private string? target;

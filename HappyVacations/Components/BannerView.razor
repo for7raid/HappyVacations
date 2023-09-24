@@ -1,0 +1,95 @@
+﻿
+<div class="banner">
+    
+    <div class="user">
+        <img class="user-avatar" src="https://placehold.co/90x90" alt="" />
+        <div class="user-info">  
+            <div class="userName">
+                <FluentSelect TOption="Employee"
+                            Items="@Employees"
+                            Id="people-listbox"
+                            Width="200px"
+                            Height="250px"
+                            OptionValue="@(p => p.Id)"
+                            OptionText="@(p => p.Name)"
+                            @bind-SelectedOption="@SelectedEmployee" />
+            </div>
+            <span>
+                Ближайший отпуск <br />
+                10.11.2023 - 15.11.2023
+            </span>
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="info-section">
+            <h4 class="section-title">Отмечено дней отпуска</h4>
+            @* <span class="section-text">@VacationCalculatorService.TotalDays(SelectedEmployee, Start, End)</span>  *@
+        </div>
+        <div class="info-section">
+            <h4 class="section-title">Зарплатный индекс</h4>
+            @* <span class="section-text">@VacationCalculatorService.SalaryIndex(SelectedEmployee, Start, End, CalendarExceptions).ToString("0.00")</span> *@
+        </div>
+    </div>
+
+    <div class="controls">
+        <FluentButton OnClick="AddNewEmployee" Appearance="Appearance.Accent">Добавить сотрудника</FluentButton>
+    </div>
+
+
+</div> 
+
+@inject IDialogService DialogService
+@inject IRepository repository
+@inject VacationCalculatorService VacationCalculatorService
+
+@code {
+    [Parameter]
+    public List<Employee> Employees { get; set; } = default!;
+
+    [Parameter]
+    public Employee? SelectedEmployee { get; set; } 
+
+    [Parameter]
+    public List<CalendarException> CalendarExceptions { get; set; }
+
+    [Parameter]
+    public DateTime Start { get; set; } = default!;
+
+    [Parameter]
+    public DateTime End { get; set; } = default!;
+
+    [Parameter]
+    public string TeamId { get; set; }
+    [Parameter]
+    public string TeamName { get; set; }
+ 
+    private async Task AddNewEmployee()
+    {
+        var item = new Employee();
+
+        DialogParameters<Employee> parameters = new()
+            {
+                Title = $"Добавить нового сотрудника",
+                PrimaryAction = null,
+                SecondaryAction = null,
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false,
+                Width = "400px",
+                Height = "400px",
+                Content = item
+            };
+
+        IDialogReference dialog = await DialogService.ShowDialogAsync<EmployeeEditor, Employee>(parameters);
+        DialogResult? result = await dialog.Result;
+
+
+        if (result.Data is bool b && b)
+        {
+            Employees.Add(item);
+            await repository.SaveEmployee(item);
+
+        }
+    }
+
+}

@@ -1,83 +1,73 @@
+@import url('./_buttons.css');
+
+:root {
+    --main-bg-color: #EEF2F8;
+    --main-color: #027AFF; 
+    --secondary-color: #78859D;
+    --secondary-color-light: #E6EAF1;
+    --danger-color: #f35555;
+    --dark-color: #161C39;
+    --yellow-color: #F6CD62;
+    --neutral-stroke-focus: var(--secondary-color-light) !important; 
+
+    --header-height: 4rem;
+}
+
 body {
-    --body-font: Segoe UI, sans-serif;
-    font-family: var(--body-font);
+    background: var(--main-bg-color);
+    font-family: Roboto, var(--body-font);
     font-size: var(--type-ramp-base-font-size);
     line-height: var(--type-ramp-base-line-height);
     margin: 0;
+    font-weight: 500;
 }
 
-.container {
+button {
+    border: none !important;
+}
+
+.wrapper {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "siteheader"
-        "main";
 }
 
-.siteheader {
-    grid-area: siteheader;
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-start;
-    height: 3.5rem;
+.header {
+    height: var(--header-height);
+    line-height: var(--header-height);
     display: flex;
-    align-items: center;
     white-space: nowrap;
-    padding-left: 1.5rem;
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--secondary-color-light);
 }
 
-    .siteheader a {
+    .header a {
         padding-inline-end: 10px;
+        color: var(--secondary-color);
+        text-decoration: none;
+    }
+
+    .header a::after {
+        padding-left: 0.7rem;
+        content: "/";
+    }
+
+    .header a:last-child::after {
+        content: "";
     }
 
 .main {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "navigation content";
-    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    width: 100vw
 }
 
-.navigation {
-    grid-area: navigation;
-    background-color: var(--fill-color);
-    color: var(--neutral-foreground-rest);
-    padding-left: calc(var(--design-unit) * 3px);
-}
 
-    .navigation > ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    .navigation h1 {
-        font-size: var(--type-ramp-plus-1-font-size);
-        line-height: var(--type-ramp-plus-1-line-height);
-        padding: 15px calc((10 + (var(--design-unit) * 2 * var(--density))) * 1px);
-        margin: 0;
-    }
-
-    .navigation fluent-anchor {
-        width: 100%;
-    }
-
-        .navigation fluent-anchor::part(control) {
-            justify-content: start;
-        }
 
 .content {
-    grid-area: content;
-    --elevation: 2;
     background-color: var(--fill-color);
-    color: var(--neutral-foreground-rest);
-    padding-inline-start: calc(var(--design-unit) * 6px);
-    padding-inline-end: calc(var(--design-unit) * 6px);
+    padding: 2rem;
+    margin: 0 2rem;
+    box-shadow: 0px 0px 50px 0px rgba(0,0,0,0.05);
+    border-radius: 10px;
 }
 
 
@@ -149,3 +139,16 @@ body {
     padding: 1rem 1rem;
     border: 1px solid transparent;
 }
+
+
+.fluent-datepicker svg {
+    fill: var(--main-color)
+}
+
+.period-selector {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+ 

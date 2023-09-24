@@ -1,8 +1,7 @@
 ﻿.valcation-table {
-    width: 100vw;
+    width: 100%;
    /* height: 100vh;*/
-    overflow: scroll;
-    border: 1px solid #777777;
+    overflow: scroll; 
 }
 
     .valcation-table table {
@@ -11,19 +10,17 @@
 
     .valcation-table th {
         border-left: none;
-        border-right: 1px solid #bbbbbb;
+        border-right: 1px solid var(--secondary-color-light);
         padding: 2px;
         position: sticky;
-        top: 0;
-        background: #727272;
-        color: #e0e0e0;
+        top: 0;  
         font-weight: normal;
     }
 
     .valcation-table td {
         border-left: none;
-        border-right: 1px solid #bbbbbb;
-        border-bottom: 1px solid #bbbbbb;
+        border-right: 1px solid var(--secondary-color-light);
+        border-bottom: 1px solid var(--secondary-color-light);
         padding: 2px;
     }
 
@@ -67,7 +64,7 @@
 
         .valcation-table td:nth-child(1),
         .valcation-table td:nth-child(2):not([rowspan]) {
-            background: #ffebb5;
+            background: #e9f6ff;
         }
 
         .valcation-table td:nth-child(3),
@@ -84,27 +81,27 @@
 
     .valcation-table th.weekend {
         background: pink;
-        color: black;
+        color: var(--dark-color);
     }
 
     .valcation-table td.Regular {
         background: pink;
-        color: black;
+        color: var(--dark-color);
     }
 
     .valcation-table td.DonorDay {
-        background: yellow;
-        color: black;
+        background: var(--yellow-color);
+        color: var(--dark-color);
     }
 
     .valcation-table td.NonPayed {
-        background: gray;
-        color: black;
+        background: var(--dark-color);
+        color: white
     }
 
     .valcation-table td.warning-2 {
         background: orange;
-        color: black;
+        color: var(--dark-color);
     }
 
     .valcation-table td.warning-3,
@@ -115,11 +112,11 @@
     .valcation-table td.warning-8,
     .valcation-table td.warning-9,
     .valcation-table td.warning-10 {
-        background: red;
-        color: black;
+        background: var(--danger-color);
+        color: var(--dark-color);
     }
 
     .valcation-table td.error {
-        background: red;
-        color: black;
+        background: var(--danger-color);
+        color: var(--dark-color);
     }

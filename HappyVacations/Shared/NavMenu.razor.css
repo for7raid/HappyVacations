@@ -1,35 +1,64 @@
 
-.nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+
+.navigation {
+    background-color: var(--fill-color);
+    color: var(--neutral-foreground-rest);
+    border-radius: 0 15px 15px 0;
+    width: 250px;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
+    .navigation > ul {
+        list-style: none;
+        padding: 0;
     }
 
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
+    .navigation h1 {
+        font-size: var(--type-ramp-plus-1-font-size);
+        line-height: var(--type-ramp-plus-1-line-height);
+        padding: 15px calc((20 + (var(--design-unit) * 2 * var(--density))) * 1px);
+        margin: 0;
+        border-bottom: 1px solid var(--secondary-color-light);
     }
 
-    .nav-item ::deep a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
+    .navigation fluent-anchor {
+        width: 100%;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
-
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+        .navigation fluent-anchor::part(control) {
+            justify-content: start;
+        }
+        
+        .nav-item {
+            font-size: 0.9rem;
+            padding-bottom: 0.5rem;
+        }
+        
+            .nav-item:first-of-type {
+                padding-top: 1rem;
+            }
+        
+            .nav-item:last-of-type {
+                padding-bottom: 1rem;
+            }
+        
+            .nav-item ::deep a {
+                color: #d7d7d7;
+                border-radius: 4px;
+                height: 3rem;
+                display: flex;
+                align-items: center;
+                line-height: 3rem;
+            }
+        
+        .nav-item ::deep a.active {
+            background-color: rgba(255,255,255,0.25);
+            color: white;
+        }
+        
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        } 
 
 @media (min-width: 641px) {
     .navbar-toggler {

@@ -2,20 +2,20 @@
 
 @if (team is not null)
 {
-    <div>
+    
+    <BannerView SelectedEmployee="@SelectedEmployee" Employees="@Employees"  Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" />
+    
+    <div class="content">
 
-        Период с
-        <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
-        <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
-
-          
-
-        <FluentButton OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton>
-
+        <div class="period-selector">
+            Период с 
+            <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по 
+            <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+        </div>
 
         <TableView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
 
-        <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
+        <CalendarView SelectedEmployee="@SelectedEmployee" Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
     </div>
 } 
 else
@@ -28,6 +28,8 @@ else
 
 @code {
     public List<Employee> Employees { get; set; }
+    
+    public Employee? SelectedEmployee { get; set; }
 
     public List<CalendarException> CalendarExceptions { get; set; }
 
@@ -49,35 +51,16 @@ else
         Employees = await repository.GetEmployees(TeamId);
     }
 
-
-
-    private async Task AddNewEmployee()
+    protected override void OnAfterRender(bool firstRender)
     {
-        var item = new Employee();
-
-        DialogParameters<Employee> parameters = new()
-            {
-                Title = $"Добавить нового сотрудника",
-                PrimaryAction = null,
-                SecondaryAction = null,
-                PrimaryActionEnabled = false,
-                SecondaryActionEnabled = false,
-                Width = "400px",
-                Height = "400px",
-                Content = item
-            };
-
-        IDialogReference dialog = await DialogService.ShowDialogAsync<EmployeeEditor, Employee>(parameters);
-        DialogResult? result = await dialog.Result;
-
-
-        if (result.Data is bool b && b)
+        base.OnAfterRender(firstRender);
+        if (firstRender)
         {
-            Employees.Add(item);
-            await repository.SaveEmployee(item);
-
+            SelectedEmployee = Employees.FirstOrDefault();
+            StateHasChanged();
         }
     }
+
 
     private async Task EditEmployee(Employee employee)
     {
@@ -151,6 +134,39 @@ else
             }
 
         }
+    }
+
+    string GetCellClass(DateTime date)
+    {
+        var exception = CalendarExceptions.FirstOrDefault(d => d.Date.Date == date.Date);
+        var item = SelectedEmployee!.Items.FirstOrDefault(i => i.Date.Date == date.Date);
+
+        var className = string.Empty;
+
+        if (item is not null)
+        {
+            if (item.Cancelled)
+            {
+                className += " cancelled ";
+            }
+            else
+            {
+                className = className + " " + item.ItemType.ToString() + " ";
+            }
+
+        }
+
+        if (exception is not null)
+        {
+            return exception.ExceptionType == CalendarExceptionType.Weekend ? "weekend" : string.Empty;
+        }
+
+        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+        {
+            return "weekend";
+        }
+
+        return className;
     }
 
 }

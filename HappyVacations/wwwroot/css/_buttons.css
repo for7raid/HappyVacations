@@ -1,0 +1,17 @@
+:root {
+    --accent-fill-rest: #027AFF !important;
+    --accent-fill-hover: #027AFF !important;
+    --accent-fill-active: #027AFF !important;
+    --accent-fill-focus: #027AFF !important;
+    --foreground-on-accent-rest: #ffffff;
+    --foreground-on-accent-hover: #ffffff;
+    --foreground-on-accent-active: #ffffff;
+    --foreground-on-accent-focus: #ffffff;
+    --accent-foreground-rest: #023b8f;
+    --accent-foreground-hover: #012e7f;
+    --accent-foreground-active: #0360b9;
+    --accent-foreground-focus: #023b8f;
+    --accent-stroke-control-rest: linear-gradient(#1c79ca 90%, #024885 100%);
+    --accent-stroke-control-hover: linear-gradient(#1b80d2 90%, #035292 100%);
+    --accent-stroke-control-active: #1b8ce3;
+}

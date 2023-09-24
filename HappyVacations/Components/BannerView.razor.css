@@ -1,0 +1,33 @@
+﻿.banner {
+    height: 200px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.banner .user {
+    display: flex;
+    flex-direction: row;
+}
+
+.banner .user .user-avatar {
+    border-radius: 10px;
+    margin-right: 2rem;
+}
+
+.banner .user .user-info .userName {
+    margin-top: 0.3rem;
+}
+
+.banner .user .user-info span {
+    color: var(--secondary-color);
+}
+
+.banner .info .info-section .section-title {
+    margin-bottom: 0.3rem;
+}
+
+.banner .info .info-section .section-text {
+    color: var(--secondary-color);
+}
