@@ -9,8 +9,14 @@
                   OptionText="@(p => p.Name)"
                   @bind-SelectedOption="@SelectedEmployee" />
 
+  
+
+
     @if (SelectedEmployee is not null)
     {
+        <span>Отмечено дней отпуска @VacationCalculatorService.TotalDays(SelectedEmployee, Start, End)</span>
+        <span>Зарплатный индекс @VacationCalculatorService.SalaryIndex(SelectedEmployee, Start, End, CalendarExceptions).ToString("0.00")</span>
+
         <FluentStack Wrap=true HorizontalGap="50" VerticalGap="50">
             @for (var item = Start; item <= End; item = item.AddMonths(1))
             {
@@ -29,6 +35,8 @@
 </div>
 
 @inject IDialogService DialogService
+@inject VacationCalculatorService VacationCalculatorService
+
 
 @code {
     [Parameter]
