@@ -11,6 +11,7 @@
                 {
                     <th colspan="@DateTime.DaysInMonth(item.Year, item.Month)">@item.ToString("MMMM")</th>
                 }
+                <th></th>
             </tr>
             <tr>
 
@@ -22,6 +23,7 @@
                 {
                     <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
                 }
+                <th>Рабочих дней</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +43,6 @@
                         <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
                         <td>@VacationCalculatorService.SalaryIndex(employee, Start, End, CalendarExceptions).ToString("0.00")</td>
 
-
                         @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                         {
 
@@ -57,6 +58,8 @@
                                 }
                             </td>
                         }
+
+                        <td>@VacationCalculatorService.GetWorkDays(employee, Start, CalendarExceptions)</td>
                     </tr>
 
                 }
@@ -78,6 +81,7 @@
                                 @(count > 1 ? count.ToString() : string.Empty)
                             </td>
                         }
+                        <td></td>
 
                     </tr>
                 }
