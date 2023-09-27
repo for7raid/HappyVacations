@@ -25,6 +25,7 @@
         border-right: 1px solid #bbbbbb;
         border-bottom: 1px solid #bbbbbb;
         padding: 2px;
+        background: #fff;
     }
 
         .valcation-table th:nth-child(1),
@@ -82,7 +83,8 @@
         z-index: 2;
     }
 
-    .valcation-table th:last-child {
+    .valcation-table th:last-child,
+    .valcation-table td:last-child {
         position: sticky;
         right: 0;
         width: 80px;
