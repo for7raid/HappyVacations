@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HappyVacations", "HappyVacations\HappyVacations.csproj", "{A7E32228-9A44-403F-A519-DB013A17AD2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YDBTest", "YDBTest\YDBTest.csproj", "{E2E54444-8278-49A9-B5AF-001E4D535EDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A7E32228-9A44-403F-A519-DB013A17AD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7E32228-9A44-403F-A519-DB013A17AD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7E32228-9A44-403F-A519-DB013A17AD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2E54444-8278-49A9-B5AF-001E4D535EDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E54444-8278-49A9-B5AF-001E4D535EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E54444-8278-49A9-B5AF-001E4D535EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E54444-8278-49A9-B5AF-001E4D535EDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
