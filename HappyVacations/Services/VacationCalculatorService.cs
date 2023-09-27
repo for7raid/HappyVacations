@@ -66,7 +66,7 @@ namespace HappyVacations.Services
             return salaryIndex;
         }
 
-        private int GetWorkDays(Employee employee, DateTime month, IEnumerable<CalendarException> CalendarExceptions)
+        public int GetWorkDays(Employee employee, DateTime month, IEnumerable<CalendarException> CalendarExceptions)
         {
             var days = 0;
 
