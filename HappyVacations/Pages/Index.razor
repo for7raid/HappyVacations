@@ -44,8 +44,9 @@ else
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
-        CalendarExceptions = await repository.GetCalendarExpeptions();
         team = await repository.GetTeam(TeamId, TeamName);
+        CalendarExceptions = await repository.GetCalendarExpeptions();
+
         Employees = await repository.GetEmployees(TeamId);
     }
 
@@ -53,7 +54,7 @@ else
 
     private async Task AddNewEmployee()
     {
-        var item = new Employee();
+        var item = new Employee() { TeamId = team.Id };
 
         DialogParameters<Employee> parameters = new()
             {
@@ -116,6 +117,7 @@ else
         if (item is null)
         {
             employee.Items.Add(new VacationItem { Date = date });
+            await repository.SaveEmployee(employee);
         }
         else
         {

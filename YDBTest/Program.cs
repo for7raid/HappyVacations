@@ -1,53 +1,67 @@
-﻿using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.DataModel;
-using Amazon.DynamoDBv2.Model;
-using Amazon.DynamoDBv2.Model.Internal.MarshallTransformations;
-using Amazon.Runtime.Endpoints;
+﻿using Google.Cloud.Firestore;
 using HappyVacations.Models;
-using YDBTest;
 
 Console.WriteLine("Hello, World!");
 
 
 /*
  
- Идентификатор ключа:
-YCAJEx14pOZBAG_lNwNM6dnd5
-Ваш секретный ключ:
-YCPReH4EDy6ysBj0J691-14EOu4oVVrZBp8pKHR0
-
+ const firebaseConfig = {
+  apiKey: "AIzaSyA4G8UE1E4noKHoG4uORUhd7aUS9XUmX-4",
+  authDomain: "happy-vacation-test.firebaseapp.com",
+  projectId: "happy-vacation-test",
+  storageBucket: "happy-vacation-test.appspot.com",
+  messagingSenderId: "859562352554",
+  appId: "1:859562352554:web:ccaa4478df6d638fec15d3"
+};
  */
 
+var firebaseConfig = new
+{
+    apiKey = "AIzaSyA4G8UE1E4noKHoG4uORUhd7aUS9XUmX-4",
+    authDomain = "happy-vacation-test.firebaseapp.com",
+    projectId = "happy-vacation-test",
+    storageBucket = "happy-vacation-test.appspot.com",
+    messagingSenderId = "859562352554",
+    appId = "1:859562352554:web:ccaa4478df6d638fec15d3"
+};
 
-AmazonDynamoDBConfig clientConfig = new AmazonDynamoDBConfig();
-clientConfig.ServiceURL = "https://docapi.serverless.yandexcloud.net/ru-central1/b1g6cr7j44q82g1q3hmc/etnlllp146mvdtat958n";
-AmazonDynamoDBClient client = new AmazonDynamoDBClient("YCAJEx14pOZBAG_lNwNM6dnd5", "YCPReH4EDy6ysBj0J691-14EOu4oVVrZBp8pKHR0", clientConfig);
-DynamoDBContext context = new DynamoDBContext(client);
+FirestoreDb db = FirestoreDb.Create(firebaseConfig.projectId);
+Console.WriteLine("Created Cloud Firestore client with project ID: {0}", firebaseConfig.projectId);
 
 var team = new Team { Name = "adacta", Id = "sdf323asdf" };
 
-await context.SaveAsync(team);
+// Create a document with a random ID in the "users" collection.
+CollectionReference collection = db.Collection("users");
+DocumentReference document = await collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = 1815 });
 
-var team2 = await context.LoadAsync<Team>(team);
+// A DocumentReference doesn't contain the data - it's just a path.
+// Let's fetch the current document.
+DocumentSnapshot snapshot = await document.GetSnapshotAsync();
 
-//string tableName = "ProductCatalog";
+// We can access individual fields by dot-separated path
+Console.WriteLine(snapshot.GetValue<string>("Name.First"));
+Console.WriteLine(snapshot.GetValue<string>("Name.Last"));
+Console.WriteLine(snapshot.GetValue<int>("Born"));
 
-//var request = new PutItemRequest
-//{
-//    TableName = tableName,
-//    Item = new Dictionary<string, AttributeValue>()
-//      {
-//          { "Id", new AttributeValue { S = "201" }},
-//          { "Title", new AttributeValue { S = "Book 201 Title" }},
-//          { "ISBN", new AttributeValue { S = "11-11-11-11" }},
-//          { "Price", new AttributeValue { S = "20.00" }},
-//          {
-//            "Authors",
-//            new AttributeValue
-//            { SS = new List<string>{"Author1", "Author2"}   }
-//          }
-//      }
-//};
-//await client.PutItemAsync(request);
+// Or deserialize the whole document into a dictionary
+Dictionary<string, object> data = snapshot.ToDictionary();
+Dictionary<string, object> name = (Dictionary<string, object>)data["Name"];
+Console.WriteLine(name["First"]);
+Console.WriteLine(name["Last"]);
+
+// See the "data model" guide for more options for data handling.
+
+// Query the collection for all documents where doc.Born < 1900.
+Query query = collection.WhereLessThan("Born", 1900);
+QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+foreach (DocumentSnapshot queryResult in querySnapshot.Documents)
+{
+    string firstName = queryResult.GetValue<string>("Name.First");
+    string lastName = queryResult.GetValue<string>("Name.Last");
+    int born = queryResult.GetValue<int>("Born");
+    Console.WriteLine($"{firstName} {lastName}; born {born}");
+}
+
 
 Console.WriteLine("Done");

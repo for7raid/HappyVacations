@@ -42,7 +42,7 @@
 @code {
     int year = DateTime.Now.Year;
 
-    public List<CalendarException> CalendarExceptions { get; set; }
+    public List<CalendarException> CalendarExceptions { get; set; } = new();
 
 
     CalendarException? selectedCalendarException;
