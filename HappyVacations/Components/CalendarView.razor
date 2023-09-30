@@ -16,7 +16,7 @@
     {
         <div>Отмечено дней отпуска @VacationCalculatorService.TotalDays(SelectedEmployee, Start, End)</div>
         <div>Зарплатный индекс @VacationCalculatorService.SalaryIndex(SelectedEmployee, Start, End, CalendarExceptions).ToString("0.00")</div>
-        <div>Рабочих дней @VacationCalculatorService.GetWorkDays(SelectedEmployee, Start, CalendarExceptions)</div>
+        <div>Рабочих дней @VacationCalculatorService.GetWorkDaysInPeriod(SelectedEmployee, Start, End, CalendarExceptions)</div>
 
         <FluentStack Wrap=true HorizontalGap="50" VerticalGap="50">
             @for (var item = Start; item <= End; item = item.AddMonths(1))

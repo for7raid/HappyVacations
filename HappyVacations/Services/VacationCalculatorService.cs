@@ -52,7 +52,7 @@ namespace HappyVacations.Services
 
                 var dayCost = salaryConst / workDaysByMonth[month.ToString("yyyy-MM")];
 
-                var workDaysSalary = dayCost * GetWorkDays(employee, month, CalendarExceptions);
+                var workDaysSalary = dayCost * GetWorkDaysInMonth(employee, month, CalendarExceptions);
                 
                 var holidaysSalary = holidayCost * (vacationsByMonth.ContainsKey(month.ToString("yyyy-MM")) ? vacationsByMonth[month.ToString("yyyy-MM")] : 0);
                 
@@ -66,11 +66,11 @@ namespace HappyVacations.Services
             return salaryIndex;
         }
 
-        public int GetWorkDays(Employee employee, DateTime month, IEnumerable<CalendarException> CalendarExceptions)
+        public int GetWorkDaysInPeriod(Employee employee, DateTime start, DateTime end, IEnumerable<CalendarException> CalendarExceptions)
         {
             var days = 0;
 
-            for (var day = month; day < month.AddMonths(1); day = day.AddDays(1))
+            for (var day = start; day <= end; day = day.AddDays(1))
             {
 
                 var vacation = employee.Items.FirstOrDefault(i => !i.Cancelled & i.Date == day & i.ItemType == VacationItemType.Regular);
@@ -87,6 +87,12 @@ namespace HappyVacations.Services
             }
 
             return days;
+        }
+
+        public int GetWorkDaysInMonth(Employee employee, DateTime month, IEnumerable<CalendarException> CalendarExceptions) 
+        {
+            var end = month.AddMonths(1).AddDays(-1);
+            return GetWorkDaysInPeriod(employee, month, end, CalendarExceptions);
         }
 
         private void FillWorkDayByMonth(DateTime month, IEnumerable<CalendarException> CalendarExceptions)
