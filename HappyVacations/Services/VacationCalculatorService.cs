@@ -96,12 +96,14 @@ namespace HappyVacations.Services
             return GetWorkDaysInPeriod(employee, month, end, CalendarExceptions);
         }
 
-        public int GetAvailableSpDays(Employee employee, DateTime start, DateTime end, IEnumerable<CalendarException> CalendarExceptions)
+        public double GetAvailableSpDays(Employee employee, Team team, DateTime start, DateTime end, IEnumerable<CalendarException> CalendarExceptions)
         {
-            var workHoursTotal = GetWorkDays(employee, start, CalendarExceptions);
-            // var employeeTeam = IRepository.GetTeam(employee.TeamId, "adacta");
-            // SP_available = WokrHoursTotal / HoursPerSP * (1 - опер расходы) * (1 - накладные расходы)
-            return 10;
+            var workHoursTotal = GetWorkDaysInPeriod(employee, start, end, CalendarExceptions);
+            var teamHoursPerSP = team.HoursPerSP;
+            var teamOverheads = team.Overheads;
+            var teamOperatingExpenses = team.OperatingExpenses;
+            
+            return workHoursTotal / teamHoursPerSP * (1 - teamOverheads) * (1 - teamOperatingExpenses);
         }
 
         private void FillWorkDayByMonth(DateTime month, IEnumerable<CalendarException> CalendarExceptions)

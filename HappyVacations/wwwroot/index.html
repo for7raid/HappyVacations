@@ -81,6 +81,18 @@
                 }));
                 return dataArray.length ? dataArray[0] : undefined;
             },
+
+            getTeamsList: async function () {
+                const q = query(collections.teams);
+
+                const querySnapshot = await getDocs(q);
+                let dataArray = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    Name: doc.get("name"),
+                }));
+                return dataArray.length ? dataArray[0] : undefined;
+            },
+
             saveTeam: async function (item) {
                 const docRef = doc(collections.teams, item.id.toString());
                 await setDoc(docRef, item);

@@ -7,7 +7,8 @@ body {
 }
 
 .container {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr;
     gap: 0px 0px;
@@ -26,7 +27,7 @@ body {
     display: flex;
     align-items: center;
     white-space: nowrap;
-    padding-left: 1.5rem;
+    padding: 0 1.5rem;
 }
 
     .siteheader a {
@@ -65,8 +66,10 @@ body {
     --elevation: 2;
     background-color: var(--fill-color);
     color: var(--neutral-foreground-rest);
-    padding-inline-start: calc(var(--design-unit) * 6px);
-    padding-inline-end: calc(var(--design-unit) * 6px);
+}
+
+main {
+    padding: 1.5rem;
 }
 
 
@@ -160,12 +163,6 @@ table {
     color: #fff;
     text-align: left;
   }
-  tr:first-child th:first-child {
-    border-top-left-radius: 6px;
-  }
-  tr:first-child th:last-child {
-    border-top-right-radius: 6px;
-  }
   td {
     border-right: 1px solid #c6c9cc;
     border-bottom: 1px solid #c6c9cc;
@@ -175,10 +172,4 @@ table {
   }
   tr:nth-child(even) td {
     background: #eaeaed;
-  }
-  tr:last-child td:first-child {
-    border-bottom-left-radius: 6px;
-  }
-  tr:last-child td:last-child {
-    border-bottom-right-radius: 6px;
   }

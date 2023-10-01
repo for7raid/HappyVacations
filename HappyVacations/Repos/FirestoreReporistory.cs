@@ -26,6 +26,11 @@ namespace HappyVacations.Repos
             return await _jS.InvokeAsync<Team>("firestore.getTeam", id, name);
         }
 
+        public async Task<List<Team>> GetTeamsList()
+        {
+            return await _jS.InvokeAsync<List<Team>>("firestore.getTeamsList");
+        }
+
         public async Task RemoveCalendarException(CalendarException calendarException)
         {
             await _jS.InvokeVoidAsync("firestore.removeCalendarExpeption", calendarException.Id);

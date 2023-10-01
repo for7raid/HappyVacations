@@ -61,8 +61,8 @@
                             </td>
                         }
 
-                        <td>@VacationCalculatorService.GetWorkDays(employee, Start, CalendarExceptions)</td>
-                        <td>@VacationCalculatorService.GetAvailableSpDays(employee, Start, End, CalendarExceptions)</td>
+                        <td>@VacationCalculatorService.GetWorkDaysInPeriod(employee, Start, End, CalendarExceptions)</td>
+                        <td>@VacationCalculatorService.GetAvailableSpDays(employee, Team, Start, End, CalendarExceptions)</td>
                     </tr>
 
                 }
@@ -112,6 +112,9 @@
 
     [Parameter]
     public EventCallback<Employee> EditEmployee { get; set; }
+
+    [Parameter]
+    public Team Team { get; set; }
 
     [Parameter]
     public EventCallback<Tuple<Employee, DateTime>> EditDateCell { get; set; }
