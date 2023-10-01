@@ -12,6 +12,7 @@
                     <th colspan="@DateTime.DaysInMonth(item.Year, item.Month)">@item.ToString("MMMM")</th>
                 }
                 <th></th>
+                <th></th>
             </tr>
             <tr>
 
@@ -24,6 +25,7 @@
                     <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
                 }
                 <th>Рабочих дней</th>
+                <th>Доступные SP на фичи</th>
             </tr>
         </thead>
         <tbody>
@@ -59,7 +61,8 @@
                             </td>
                         }
 
-                        <td>@VacationCalculatorService.GetWorkDaysInPeriod(employee, Start, End, CalendarExceptions)</td>
+                        <td>@VacationCalculatorService.GetWorkDays(employee, Start, CalendarExceptions)</td>
+                        <td>@VacationCalculatorService.GetAvailableSpDays(employee, Start, End, CalendarExceptions)</td>
                     </tr>
 
                 }
@@ -68,7 +71,7 @@
                 {
                     <tr>
                         <td></td>
-                        <td style="font-style:italic">Пересечения</td>
+                        <td style="font-style:italic">Пересечения\Итого</td>
                         <td></td>
                         <td></td>
 
