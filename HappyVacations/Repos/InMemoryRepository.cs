@@ -6,8 +6,8 @@ namespace HappyVacations.Repos
     {
         static List<Team> Teams = new List<Team>
         {
-            new Team{ Name = "adacta", Id = "sdf323asdf" },
-            new Team{ Name = "teamName", Id = "temp" }
+            new Team{ Name = "adacta", Id = "sdf323asdf", HoursPerSP = 8, OperatingExpenses = 0.2, Overheads = 0.45 },
+            new Team{ Name = "teamName", Id = "temp", HoursPerSP = 8, OperatingExpenses = 0.2, Overheads = 0.45 }
         };
 
         static List<Employee> Employees { get; set; } = new List<Employee>
@@ -73,7 +73,7 @@ namespace HappyVacations.Repos
 
         public Task<List<Team>> GetTeamsList()
         {
-            return Task.FromResult(Teams);
+            return Task.FromResult(Teams.ToList());
         }
 
         public Task<List<Employee>> GetEmployees(string teamId)

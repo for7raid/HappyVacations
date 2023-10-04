@@ -47,7 +47,7 @@ namespace HappyVacations.Repos
 
         public async Task<List<Team>> GetTeamsList()
         {
-            var conditions = new List<ScanCondition>();
+            var conditions = new List<ScanCondition>{};
             var allDocs = await context.ScanAsync<Team>(conditions).GetRemainingAsync();
             return allDocs;
         }

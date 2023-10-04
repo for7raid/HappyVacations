@@ -1,10 +1,10 @@
 ﻿.fluent-calendar div[part=day] .weekend,
 .fluent-calendar div[part=day] .Regular {
-    color: pink;
+    color: #FD4E5D;
 }
 
 .fluent-calendar div[part=day] .DonorDay {
-    background: yellow;
+    background: #FBC756;
 }
 
 

@@ -1,3 +1,7 @@
+:root {
+    --primary: #3E85F0;
+}
+
 body {
     --body-font: Segoe UI, sans-serif;
     font-family: var(--body-font);
@@ -5,6 +9,8 @@ body {
     line-height: var(--type-ramp-base-line-height);
     margin: 0;
 }
+
+
 
 .container {
     display: flex;
@@ -20,7 +26,7 @@ body {
 
 .siteheader {
     grid-area: siteheader;
-    background-color: #f7f7f7;
+    background-color: var(--primary) !important;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-start;
     height: 3.5rem;
@@ -31,7 +37,8 @@ body {
 }
 
     .siteheader a {
-        padding-inline-end: 10px;
+        padding-inline-end: 10px; 
+        color: white;;
     }
 
 .navigation {
@@ -69,12 +76,12 @@ body {
 }
 
 main {
-    padding: 1.5rem;
+    padding: 0 1.5rem;
 }
 
 
 #blazor-error-ui {
-    background: lightyellow;
+    background: light#FBC756;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
@@ -146,7 +153,12 @@ main {
 .page-header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 1rem;
+    margin: 0;
+}
+
+.overlay {
+    background: rgba(62, 133, 240, 0.2) !important;
 }
 
 table {
@@ -169,6 +181,9 @@ table {
   }
   td:first-child {
     border-left: 1px solid #c6c9cc;
+  }
+  tr:nth-child(odd) td {
+    background: #fff;
   }
   tr:nth-child(even) td {
     background: #eaeaed;

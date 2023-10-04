@@ -3,19 +3,20 @@
 @if (team is not null)
 {
     <div>
-
-        Период с
-        <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
-        <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
-
-          
-
-        <FluentButton OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton>
+        <div class="page-header">
+            <div>
+                Период с
+                <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
+                <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+            </div>
+            <FluentButton OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton> 
+        </div>
 
 
         <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
 
         <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
+        
     </div>
 } 
 else

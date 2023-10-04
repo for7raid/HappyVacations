@@ -4,7 +4,7 @@
 
 <div class="page-header">    
     <div></div>
-    <FluentButton @onclick="() => {}"  Icon="Add">
+    <FluentButton @onclick="AddNewTeam"  Icon="Add">
         <FluentIcon Icon="Icons.Regular.Size16.Add" />
         Добавить
     </FluentButton> 
@@ -22,6 +22,34 @@
     {
         await base.OnParametersSetAsync();
         teamsList = await repository.GetTeamsList();
+    }
+
+    private async Task AddNewTeam()
+    {
+        var item = new Team() { };
+
+        DialogParameters<Team> parameters = new()
+            {
+                Title = $"Добавить Команду",
+                PrimaryAction = null,
+                SecondaryAction = null,
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false,
+                Width = "400px",
+                Height = "400px",
+                Content = item
+            };
+
+        IDialogReference dialog = await DialogService.ShowDialogAsync<TeamEditor, Team>(parameters);
+        DialogResult? result = await dialog.Result;
+
+
+        if (result.Data is bool b && b)
+        {
+            teamsList.Add(item);
+            await repository.SaveTeam(item);
+
+        }
     }
 
     private async Task EditTeam(Team team)
