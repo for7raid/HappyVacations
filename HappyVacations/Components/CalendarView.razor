@@ -1,23 +1,29 @@
 ﻿<div>
-    <label for="people-listbox">Сотрудник</label>
-    <FluentSelect TOption="Employee"
-                  Items="@Employees"
-                  Id="people-listbox"
-                  Width="200px"
-                  Height="250px"
-                  OptionValue="@(p => p.Id)"
-                  OptionText="@(p => p.Name)"
-                  @bind-SelectedOption="@SelectedEmployee" />
+    <div class="d-flex align-items-center mb-1">
+        <div class="d-flex align-items-center mr-1"> 
+            <label for="people-listbox" class="mr-1">Сотрудник</label>
+            <FluentSelect TOption="Employee"
+                        Items="@Employees"
+                        Id="people-listbox"
+                        Width="200px"
+                        Height="250px"
+                        OptionValue="@(p => p.Id)"
+                        OptionText="@(p => p.Name)"
+                        @bind-SelectedOption="@SelectedEmployee" />
+        </div>
 
-  
+    
+        @if (SelectedEmployee is not null)
+        {
+            <div class="d-flex">
+                <div class="mr-1">Отмечено дней отпуска: <b>@VacationCalculatorService.TotalDays(SelectedEmployee, Start, End)</b></div>
+                <div class="mr-1">Зарплатный индекс: <b>@VacationCalculatorService.SalaryIndex(SelectedEmployee, Start, End, CalendarExceptions).ToString("0.00")</b></div>
+                <div class="mr-1">Рабочих дней: <b>@VacationCalculatorService.GetWorkDaysInPeriod(SelectedEmployee, Start, End, CalendarExceptions)</b></div>
+            </div>
+        }
+    </div>
 
-
-    @if (SelectedEmployee is not null)
-    {
-        <div>Отмечено дней отпуска @VacationCalculatorService.TotalDays(SelectedEmployee, Start, End)</div>
-        <div>Зарплатный индекс @VacationCalculatorService.SalaryIndex(SelectedEmployee, Start, End, CalendarExceptions).ToString("0.00")</div>
-        <div>Рабочих дней @VacationCalculatorService.GetWorkDaysInPeriod(SelectedEmployee, Start, End, CalendarExceptions)</div>
-
+    @if (SelectedEmployee is not null) {
         <FluentStack Wrap=true HorizontalGap="50" VerticalGap="50">
             @for (var item = Start; item <= End; item = item.AddMonths(1))
             {

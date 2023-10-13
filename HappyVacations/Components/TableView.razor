@@ -1,5 +1,5 @@
 ﻿<div class="valcation-table">
-    <table>
+    <table class="planner-table">
         <thead>
             <tr>
                 <th></th>
@@ -52,12 +52,13 @@
                             var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
 
-                            <td class="@GetCellClass(day) @(error.HasError ? " error":"")" @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
-
-                                @if (day is not null)
-                                {
-                                    <strong>@day</strong>
-                                }
+                            <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
+                                <div class="@GetCellClass(day) @(error.HasError ? " error":"")">
+                                    @if (day is not null)
+                                    {
+                                        @day
+                                    }
+                                </div>
                             </td>
                         }
 
@@ -80,8 +81,10 @@
 
                             var count = role.Count(e => e.Items.Any(i => i.Date.Date == item && !i.Cancelled && i.ItemType == VacationItemType.Regular));
 
-                            <td class="warning-@count">
-                                @(count > 1 ? count.ToString() : string.Empty)
+                            <td>
+                                <div  class="warning-@count">
+                                    @(count > 1 ? count.ToString() : string.Empty)
+                                </div>
                             </td>
                         }
                         <td></td>

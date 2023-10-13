@@ -1,5 +1,63 @@
+@import url('./_helpers.css');
+
+@import url('./components/calendar.css');
+@import url('./components/input.css');
+@import url('./components/table.css');
+
 :root {
+    --black: #000;
+    --white: #fff;
     --primary: #3E85F0;
+
+    --secondary-dark: #182233;
+    --secondary-blue: #B3CEE2;
+    --secondary-gray: #D9DDE7;
+    --secondary-red: #FD4E5D;
+
+    --state-info: #A0C3FF;
+    --state-error: #BA0000;
+    --state-success: #76CA66;
+    --state-warning: #FBC756;
+
+    --gray-1: #1F2937;
+    --gray-2: #374151;
+    --gray-3: #4B5563;
+    --gray-4: #6B7280;
+    --gray-5: #9CA3AF;
+    --gray-6: #D1D5DB;
+    --gray-7: #F3F4F6;
+
+    --red: #EB5757;
+    --orange: #F2994A;
+    --yellow: #F2C94C;
+    --green-1: #219653;
+    --green-2: #27AE60;
+    --green-3: #6FCF97;
+    --blue-1: #2F80ED;
+    --blue-2: #2D9CDB;
+    --blue-3: #56CCF2;
+    --purple-1: #9B51E0;
+    --purple-2: #BB6BD9;
+
+    --accent-fill-rest: var(--primary) !important;
+    --accent-stroke-control-rest: var(--primary) !important;
+} 
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 4px;
+}
+  
+::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 4px;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: var(--primary);
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }
 
 body {
@@ -8,20 +66,17 @@ body {
     font-size: var(--type-ramp-base-font-size);
     line-height: var(--type-ramp-base-line-height);
     margin: 0;
+    background: #F4F7FF;
 }
 
-
+.period-selector .fluent-datepicker {
+    margin: 0 0.5rem;
+}
 
 .container {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "siteheader"
-        "main";
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1rem;
 }
 
 .siteheader {
@@ -70,8 +125,7 @@ body {
 
 .content {
     grid-area: flex;
-    --elevation: 2;
-    background-color: var(--fill-color);
+    --elevation: 2; 
     color: var(--neutral-foreground-rest);
 }
 
@@ -154,37 +208,11 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    margin: 0;
+    margin: 0 0 1rem 0;
+    background: var(--white);
+    border-radius: 10px;
 }
 
 .overlay {
     background: rgba(62, 133, 240, 0.2) !important;
 }
-
-table {
-    border-collapse: separate;
-    border-spacing: 0;
-    width: 100%;
-  }
-  th,
-  td {
-    padding: 6px 15px;
-  }
-  th {
-    background: #42444e;
-    color: #fff;
-    text-align: left;
-  }
-  td {
-    border-right: 1px solid #c6c9cc;
-    border-bottom: 1px solid #c6c9cc;
-  }
-  td:first-child {
-    border-left: 1px solid #c6c9cc;
-  }
-  tr:nth-child(odd) td {
-    background: #fff;
-  }
-  tr:nth-child(even) td {
-    background: #eaeaed;
-  }
