@@ -1,3 +1,7 @@
-.fluent-datepicker .root {
-    background: #fff !important;
+:root {
+    --neutral-fill-input-rest: var(--white) !important;
+    --neutral-stroke-input-rest: var(--gray-6) !important;
+
+    --neutral-fill-input-hover: rgba(160, 195, 255, .1) !important;
+    --neutral-stroke-input-hover: var(--primary) !important;
 }

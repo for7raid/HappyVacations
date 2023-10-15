@@ -12,12 +12,10 @@
                     <th colspan="@DateTime.DaysInMonth(item.Year, item.Month)">@item.ToString("MMMM")</th>
                 }
                 <th></th>
-                <th></th>
             </tr>
             <tr>
 
                 <th>Имя</th>
-                <th>Роль</th>
                 <th>Дней</th>
                 <th>Инд</th>
                 @for (var item = Start.Date; item <= End; item = item.AddDays(1))
@@ -39,9 +37,14 @@
 
                     <tr>
 
-                        <td>@employee.Name <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" /> </td>
+                        <td>
+                            <div>
+                                <b>@employee.Name</b> 
+                                <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" />
+                            </div>
+                            <span>@employee.Role</span>
+                        </td>
 
-                        <td>@employee.Role</td>
                         <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
                         <td>@VacationCalculatorService.SalaryIndex(employee, Start, End, CalendarExceptions).ToString("0.00")</td>
 
@@ -53,7 +56,7 @@
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
 
                             <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
-                                <div class="@GetCellClass(day) @(error.HasError ? " error":"")">
+                                <div class="badge @GetCellClass(day) @(error.HasError ? " error":"")">
                                     @if (day is not null)
                                     {
                                         @day
@@ -87,7 +90,6 @@
                                 </div>
                             </td>
                         }
-                        <td></td>
                         <td></td>
 
                     </tr>
