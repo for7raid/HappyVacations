@@ -3,23 +3,29 @@
 @if (team is not null)
 {
     <div>
-        <div class="page-header">
+        <div class="page-header ">
             <div class="d-flex align-items-center period-selector">
                 Период с
                 <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
                 <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
             </div>
-            <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton> 
+            <div class="d-flex align-items-center">
+                <FluentSwitch class="mr-1" @bind-Value=listView AriaLabel="Режим списка">Режим списка</FluentSwitch>
+                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton> 
+            </div>
         </div>
 
 
-        <div class="container">
-            <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
-        </div>
+        @if (listView) {
+            <div class="container">
+                <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
+            </div>
+        } else {
+            <div class="container mt-1">
+                <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
+            </div>
+        }
 
-        <div class="container mt-1">
-            <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
-        </div>
     </div>
 } 
 else
@@ -37,6 +43,7 @@ else
 
     public DateTime Start { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
     public DateTime? End { get; set; } = new DateTime(DateTime.Now.Year, 12, 31);// new DateTime(DateTime.Now.Year, 12, 31);
+    public bool listView { get; set; } = true;
 
     [Parameter]
     public string TeamId { get; set; }
@@ -53,8 +60,6 @@ else
 
         Employees = await repository.GetEmployees(TeamId);
     }
-
-
 
     private async Task AddNewEmployee()
     {

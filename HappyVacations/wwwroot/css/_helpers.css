@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.justify-content-between {
+    justify-content: space-between;
+}
+
 .mt-1 {
     margin-top: 1rem;
 }

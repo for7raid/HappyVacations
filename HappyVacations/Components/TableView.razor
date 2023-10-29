@@ -38,7 +38,7 @@
                     <tr>
 
                         <td>
-                            <div>
+                            <div class="d-flex justify-content-between">
                                 <b>@employee.Name</b> 
                                 <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" />
                             </div>
@@ -56,12 +56,12 @@
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
 
                             <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
-                                <div class="badge @GetCellClass(day) @(error.HasError ? " error":"")">
+                                <span class="badge @GetCellClass(day) @(error.HasError ? " error":"")">
                                     @if (day is not null)
                                     {
                                         @day
                                     }
-                                </div>
+                                </span>
                             </td>
                         }
 
@@ -85,9 +85,9 @@
                             var count = role.Count(e => e.Items.Any(i => i.Date.Date == item && !i.Cancelled && i.ItemType == VacationItemType.Regular));
 
                             <td>
-                                <div  class="warning-@count">
+                                <span  class="warning-@count">
                                     @(count > 1 ? count.ToString() : string.Empty)
-                                </div>
+                                </span>
                             </td>
                         }
                         <td></td>

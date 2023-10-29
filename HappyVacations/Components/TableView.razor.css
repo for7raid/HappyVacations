@@ -8,6 +8,7 @@
         left: 0;
         width: 160px;
         min-width: 160px;
+        text-align: left;
     }
 
     .valcation-table th:nth-child(2),
@@ -65,48 +66,52 @@
 
 .valcation-table th.weekend {
     background: var(--red);
-    color: black;
+    color: var(--white);
 }
 
-.valcation-table td div.badge {
+.valcation-table td span.badge {
     height: 20px;
     width: 20px;
-    border-radius: 4px;
+    border-radius: 20px;
+    display: inline-block;
 }
 
-.valcation-table td div.Regular {
-    background: var(--red);
-    color: black;
+.valcation-table td span.Regular {
+    background: var(--green-3);
+    color: var(--white);
 }
 
-.valcation-table td div.DonorDay {
+.valcation-table td span.DonorDay {
     background: var(--yellow);
     color: var(--gray-1);
 }
 
-.valcation-table td div.NonPayed {
-    background: var(--gray-3);
-    color: var(--gray-7);
+.valcation-table td span.NonPayed {
+    background: var(--gray-6);
 }
 
-.valcation-table td div.warning-2 {
+.valcation-table td span.warning-2 {
     background: var(--orange);
-    color: var(--gray-1);
+    color: var(--white);
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    display: inline-block;
 }
 
-.valcation-table td div.warning-3,
-.valcation-table td div.warning-4,
-.valcation-table td div.warning-5,
-.valcation-table td div.warning-6,
-.valcation-table td div.warning-7,
-.valcation-table td div.warning-8,
-.valcation-table td div.warning-9,
-.valcation-table td div.warning-10 {
+.valcation-table td span.warning-3,
+.valcation-table td span.warning-4,
+.valcation-table td span.warning-5,
+.valcation-table td span.warning-6,
+.valcation-table td span.warning-7,
+.valcation-table td span.warning-8,
+.valcation-table td span.warning-9,
+.valcation-table td span.warning-10 {
     background: var(--state-warning);
     color: white;
 }
 
-.valcation-table td div.error {
+.valcation-table td span.error {
     background: var(--state-error);
     color: white;
 }

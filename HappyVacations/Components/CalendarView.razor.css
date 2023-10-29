@@ -1,15 +1,27 @@
 ﻿.fluent-calendar div[part=day] .weekend,
 .fluent-calendar div[part=day] .Regular {
     color: #FD4E5D;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
 }
 
 .fluent-calendar div[part=day] .DonorDay {
     background: #FBC756;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
 }
 
 
 .fluent-calendar div[part=day] .NonPayed {
-    background: gray;
+    background: var(--gray-6);
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
 }
 
 .fluent-calendar span[part=move] {
