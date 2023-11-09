@@ -11,6 +11,7 @@ th {
     text-align:left;  
     position: sticky;
     padding: 0.5rem 0.5rem;
+    /* border: 1px solid var(--gray-7); */
   } 
     
   tr { 
@@ -20,11 +21,7 @@ th {
 
   tr td {
     text-align: center;
-    border: 1px solid #edeef2; 
-  }
-   
-  tr:hover {
-    background: var(--gray-7); 
+    border: 1px solid var(--gray-7);
   }
    
   tr:first-child {
@@ -36,9 +33,9 @@ th {
   }
    
   tr:nth-child(odd) td {
-    background: var(--white);
-  } 
+    background: rgba(255, 255, 255, 0.5);
+  }
    
   tr:nth-child(even) td {
-    background: var(--gray-7);
+    background: rgba(247, 247, 247, 0.5);
   } 

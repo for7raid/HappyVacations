@@ -1,4 +1,4 @@
-﻿<div>
+﻿<div class="calendarView">
     <div class="d-flex align-items-center mb-1">
         <div class="d-flex align-items-center mr-1"> 
             <label for="people-listbox" class="mr-1">Сотрудник</label>
@@ -24,7 +24,7 @@
     </div>
 
     @if (SelectedEmployee is not null) {
-        <FluentStack Wrap=true HorizontalGap="50" VerticalGap="50">
+        <FluentStack Wrap=true HorizontalGap="20" VerticalGap="20">
             @for (var item = Start; item <= End; item = item.AddMonths(1))
             {
                 <FluentCalendar PickerMonth="item"
@@ -100,6 +100,9 @@
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
         {
+            if (item is not null) {
+                return "weekend " + item.ItemType.ToString();    
+            }
             return "weekend";
         }
 

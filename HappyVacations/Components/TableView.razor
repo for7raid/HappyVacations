@@ -5,12 +5,12 @@
                 <th></th>
                 <th>Месяц</th>
                 <th></th>
-                <th></th>
 
                 @for (var item = Start; item <= End; item = item.AddMonths(1))
                 {
                     <th colspan="@DateTime.DaysInMonth(item.Year, item.Month)">@item.ToString("MMMM")</th>
                 }
+                <th></th>
                 <th></th>
             </tr>
             <tr>

@@ -29,40 +29,29 @@
         left: 307px;
         width: 40px;
         min-width: 40px;
-    }
-
-    .valcation-table th:nth-child(4),
-    .valcation-table td:nth-child(4) {
-        position: sticky;
-        /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-        /* 0 + 2 + 150 + 2 + 1 + 80 + 1 + 40 */
-        left: 360px;
-        width: 40px;
-        min-width: 40px;
-    }
+    } 
 
 .valcation-table th:nth-child(1),
 .valcation-table th:nth-child(2),
-.valcation-table th:nth-child(3),
-.valcation-table th:nth-child(4) {
-    z-index: 2;
+.valcation-table th:nth-child(3) {
+    z-index: 6;
 }
 
-.valcation-table th:last-child,
-.valcation-table td:last-child {
+.valcation-table th:nth-last-child(-n + 2),
+.valcation-table td:nth-last-child(-n + 2) {
     position: sticky;
     right: 0;
     width: 150px;
     min-width: 150px;
 }
 
-.valcation-table th:nth-last-child(2),
-.valcation-table td:nth-last-child(2) {
+/* .valcation-table th:nth-child(-n + 5),
+.valcation-table td:nth-child(-n + 5) {
     position: sticky;
-    right: 0;
+    right: 50;
     width: 90px;
     min-width: 90px;
-}
+} */
 
 .valcation-table th.weekend {
     background: var(--red);

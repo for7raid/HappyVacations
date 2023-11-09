@@ -217,3 +217,75 @@ main {
 .overlay {
     background: rgba(62, 133, 240, 0.2) !important;
 }
+
+.calendarView .fluent-calendar .change-month {
+    display: none !important;
+} 
+
+.calendarView .fluent-calendar .day span {
+    height: 26px;
+    width: 26px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.calendarView .fluent-calendar .day .weekend,
+.calendarView .fluent-calendar .day .Regular {
+    color: #FD4E5D;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
+.calendarView .fluent-calendar .day .DonorDay {
+    background: #FBC756 !important;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
+
+.calendarView .fluent-calendar .day .NonPayed {
+    background: var(--gray-6);
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
+.fluent-calendar .day[selected] {
+    color: inherit !important;
+    border: none !important;
+    background: inherit !important;
+}
+
+.legend {
+    display: flex;
+    gap: 10px;
+}
+
+.legend span {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.legend .Regular {
+
+    background: var(--green-3);
+    color: var(--white);
+}
+
+.legend .DonorDay {
+    color: var(--black);
+    background: #FBC756;
+}
+
+.legend .NonPayed {
+    color: var(--black);
+    background: var(--gray-6);
+}

@@ -10,11 +10,10 @@
                 <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
             </div>
             <div class="d-flex align-items-center">
-                <FluentSwitch class="mr-1" @bind-Value=listView AriaLabel="Режим списка">Режим списка</FluentSwitch>
-                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton> 
+                <FluentSwitch class="mr-1" @bind-Value=listView>Все сотрудники</FluentSwitch>
+                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить сотрудника</FluentButton> 
             </div>
         </div>
-
 
         @if (listView) {
             <div class="container">
@@ -25,6 +24,21 @@
                 <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
             </div>
         }
+        
+        <div class="legend container mt-1">
+            <div>
+                <span class="Regular">O</span> - Отпуск
+            </div>
+            <div>
+                <span class="DonorDay">Д</span> - Донорский
+            </div>
+            <div>
+                <span class="NonPayed">С</span> - За свой счёт
+            </div>
+            <div>
+                <span class="">Х</span> - Отменён\Перенесён
+            </div>
+        </div>
 
     </div>
 } 
