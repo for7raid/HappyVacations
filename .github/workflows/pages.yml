@@ -28,7 +28,7 @@ jobs:
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
         html_path: ${{ env.PUBLISH_DIR }}/index.html
-        base_href: /HappyVacationsTest/
+        base_href: /HappyVacations/
       
     - name: Setup Pages
       uses: actions/configure-pages@v3
