@@ -1,11 +1,19 @@
 name: DeployToGitHubPages
 env:
-  PUBLISH_DIR: HappyVacations/bin/release/net7.0/browser-wasm/publish/wwwroot
+  PUBLISH_DIR: /home/runner/work/HappyVacations/HappyVacations/HappyVacations/bin/Release/net7.0/publish/wwwroot
 
 # Controls when the action will run
 on:
   push:
     branches: [ master ]
+      # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -20,13 +28,15 @@ jobs:
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
         html_path: ${{ env.PUBLISH_DIR }}/index.html
-        base_href: /HappyVacationsTest/
-
-    - name: GitHub Pages
-      if: success()
-      uses: crazy-max/ghaction-github-pages@v1.5.1
+        base_href: /HappyVacations/
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
       with:
-        target_branch: gh-pages
-        build_dir: ${{ env.PUBLISH_DIR }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Upload entire repository
+        path: ${{ env.PUBLISH_DIR }}
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
