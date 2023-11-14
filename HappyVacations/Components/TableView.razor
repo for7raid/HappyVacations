@@ -22,24 +22,26 @@
                 {
                     <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
                 }
-                <th>Рабочих дней</th>
-                <th>Доступные SP на фичи</th>
+                <th>Раб. дней</th>
+                <th>SP на фичи</th>
             </tr>
         </thead>
         <tbody>
 
             @foreach (var role in Employees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
             {
+                double availableSpByRole = 0;
 
                 @foreach (var employee in role)
                 {
-
+                    double availableSpByEmployee = VacationCalculatorService.GetAvailableSpDays(employee, Team, Start, End, CalendarExceptions);
+                    availableSpByRole += availableSpByEmployee;
 
                     <tr>
 
                         <td>
                             <div class="d-flex justify-content-between">
-                                <b>@employee.Name</b> 
+                                <b>@employee.Name</b>
                                 <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" />
                             </div>
                             <span>@employee.Role</span>
@@ -66,7 +68,7 @@
                         }
 
                         <td>@VacationCalculatorService.GetWorkDaysInPeriod(employee, Start, End, CalendarExceptions)</td>
-                        <td>@VacationCalculatorService.GetAvailableSpDays(employee, Team, Start, End, CalendarExceptions)</td>
+                        <td>@availableSpByEmployee</td>
                     </tr>
 
                 }
@@ -74,10 +76,11 @@
                 @if (role.Count() > 1)
                 {
                     <tr>
+                       
+                        <td style="font-style:italic">Пересечения/Итого</td>
                         <td></td>
-                        <td style="font-style:italic">Пересечения\Итого</td>
                         <td></td>
-                        <td></td>
+                        
 
                         @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                         {
@@ -85,12 +88,13 @@
                             var count = role.Count(e => e.Items.Any(i => i.Date.Date == item && !i.Cancelled && i.ItemType == VacationItemType.Regular));
 
                             <td>
-                                <span  class="warning-@count">
+                                <span class="warning-@count">
                                     @(count > 1 ? count.ToString() : string.Empty)
                                 </span>
                             </td>
                         }
                         <td></td>
+                        <td>@availableSpByRole</td>
 
                     </tr>
                 }

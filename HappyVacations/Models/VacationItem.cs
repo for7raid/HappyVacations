@@ -2,6 +2,7 @@
 {
     public class VacationItem
     {
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime Date { get; set; }
         public VacationItemType ItemType { get; set; } = VacationItemType.Regular;
 

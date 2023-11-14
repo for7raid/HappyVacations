@@ -6,8 +6,8 @@ namespace HappyVacations.Repos
     {
         static List<Team> Teams = new List<Team>
         {
-            new Team{ Name = "adacta", Id = "sdf323asdf", HoursPerSP = 8, OperatingExpenses = 0.2, Overheads = 0.45 },
-            new Team{ Name = "teamName", Id = "temp", HoursPerSP = 8, OperatingExpenses = 0.2, Overheads = 0.45 }
+            new Team{ Name = "adacta", Id = "sdf323asdf", HoursPerSP = 8, OperatingExpenses = 25, Overheads = 45 },
+            new Team{ Name = "teamName", Id = "temp", HoursPerSP = 8, OperatingExpenses = 20, Overheads = 40 }
         };
 
         static List<Employee> Employees { get; set; } = new List<Employee>

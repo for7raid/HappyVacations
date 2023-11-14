@@ -1,15 +1,18 @@
-﻿@page "/teams"
+﻿@page "/2466E763-914F-416F-82A5-9B40962639E2/teams"
 
 <PageTitle>Команды</PageTitle>
 
-<div class="page-header">    
+<div class="page-header">
     <div></div>
     <FluentButton Appearance="Appearance.Accent" OnClick="AddNewTeam">
         Добавить
-    </FluentButton> 
+    </FluentButton>
 </div>
 
-<TeamsList Teams=@teamsList EditItem=EditTeam></TeamsList>
+@if (teamsList is not null)
+{
+    <TeamsList Teams=@teamsList EditItem=EditTeam></TeamsList>
+}
 
 @inject IDialogService DialogService
 @inject IRepository repository
@@ -53,7 +56,7 @@
 
     private async Task EditTeam(Team team)
     {
-        var item = new Team() { Name = team.Name };
+        var item = new Team() { Name = team.Name, HoursPerSP = team.HoursPerSP, OperatingExpenses = team.OperatingExpenses, Overheads = team.Overheads };
 
         DialogParameters<Team> parameters = new()
             {
@@ -74,6 +77,9 @@
         if (result.Data is bool b && b)
         {
             team.Name = item.Name;
+            team.HoursPerSP = item.HoursPerSP;
+            team.Overheads = item.Overheads;
+            team.OperatingExpenses = item.OperatingExpenses;
 
             await repository.SaveTeam(team);
         }

@@ -10,21 +10,29 @@
                 <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
             </div>
             <div class="d-flex align-items-center">
-                <FluentSwitch class="mr-1" @bind-Value=listView>Все сотрудники</FluentSwitch>
-                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить сотрудника</FluentButton> 
+                <FluentLabel Class="mr-1">Вид</FluentLabel>
+                <FluentSelect TOption=bool ValueChanged="@(c=> listView = bool.Parse(c))" class="mr-1">
+                    <FluentOption Value=true>Все сотрудники</FluentOption>
+                    <FluentOption Value=false>Один сотрудник</FluentOption>
+                </FluentSelect>
+
+                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить сотрудника</FluentButton>
             </div>
         </div>
 
-        @if (listView) {
+        @if (listView)
+        {
             <div class="container">
                 <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
             </div>
-        } else {
+        }
+        else
+        {
             <div class="container mt-1">
                 <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
             </div>
         }
-        
+
         <div class="legend container mt-1">
             <div>
                 <span class="Regular">O</span> - Отпуск
@@ -41,7 +49,7 @@
         </div>
 
     </div>
-} 
+}
 else
 {
     <div>404 - Not Found</div>

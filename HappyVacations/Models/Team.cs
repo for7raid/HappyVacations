@@ -11,8 +11,8 @@ namespace HappyVacations.Models
 
         public int HoursPerSP { get; set; } = 8;
 
-        public double Overheads { get; set; } = 0.2;
+        public int Overheads { get; set; } = 20;
 
-        public double OperatingExpenses { get; set; } = 0.45;
+        public int OperatingExpenses { get; set; } = 45;
     }
 }

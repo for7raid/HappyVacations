@@ -18,6 +18,9 @@
         <FluentButton Appearance="Appearance.Accent" OnClick="@(async _=> await Dialog.CloseAsync(Content))">Сохранить</FluentButton>
     </FluentStack>
 
+
+    <FluentLabel>Добавлено: @Content.CreatedAt.ToString("g")</FluentLabel>
+
 </FluentStack>
 
 

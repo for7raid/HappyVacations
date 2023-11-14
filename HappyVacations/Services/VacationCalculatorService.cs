@@ -103,7 +103,7 @@ namespace HappyVacations.Services
             var teamOverheads = team.Overheads;
             var teamOperatingExpenses = team.OperatingExpenses;
             
-            return workHoursTotal / teamHoursPerSP * (1 - teamOverheads) * (1 - teamOperatingExpenses);
+            return double.Round(workHoursTotal / teamHoursPerSP * (1 - teamOverheads / 100) * (1 - teamOperatingExpenses / 100), 2);
         }
 
         private void FillWorkDayByMonth(DateTime month, IEnumerable<CalendarException> CalendarExceptions)
