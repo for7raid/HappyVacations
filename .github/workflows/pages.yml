@@ -1,6 +1,6 @@
 name: DeployToGitHubPages
 env:
-  PUBLISH_DIR: bin/release/net7.0/browser-wasm/publish/wwwroot
+  PUBLISH_DIR: HappyVacations/bin/release/net7.0/browser-wasm/publish/wwwroot
 
 # Controls when the action will run
 on:
@@ -20,7 +20,7 @@ jobs:
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
         html_path: ${{ env.PUBLISH_DIR }}/index.html
-        base_href: /BlazorOnGitHubPages/
+        base_href: /HappyVacationsTest/
 
     - name: GitHub Pages
       if: success()
