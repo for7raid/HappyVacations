@@ -1,48 +1,101 @@
+@import url('./_helpers.css');
+
+@import url('./components/calendar.css');
+@import url('./components/input.css');
+@import url('./components/table.css');
+
+:root {
+    --black: #000;
+    --white: #fff;
+    --primary: #3E85F0;
+
+    --secondary-dark: #182233;
+    --secondary-blue: #B3CEE2;
+    --secondary-gray: #D9DDE7;
+    --secondary-red: #FD4E5D;
+
+    --state-info: #A0C3FF;
+    --state-error: #BA0000;
+    --state-success: #76CA66;
+    --state-warning: #FBC756;
+
+    --gray-1: #1F2937;
+    --gray-2: #374151;
+    --gray-3: #4B5563;
+    --gray-4: #6B7280;
+    --gray-5: #9CA3AF;
+    --gray-6: #D1D5DB;
+    --gray-7: #F3F4F6;
+
+    --red: #EB5757;
+    --orange: #F2994A;
+    --yellow: #F2C94C;
+    --green-1: #219653;
+    --green-2: #27AE60;
+    --green-3: #6FCF97;
+    --blue-1: #2F80ED;
+    --blue-2: #2D9CDB;
+    --blue-3: #56CCF2;
+    --purple-1: #9B51E0;
+    --purple-2: #BB6BD9;
+    --pink: #fb4f83;
+
+    --accent-fill-rest: var(--primary) !important;
+    --accent-stroke-control-rest: var(--primary) !important;
+} 
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 4px;
+}
+  
+::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 4px;
+}
+  
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: var(--primary);
+    box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+}
+
 body {
     --body-font: Segoe UI, sans-serif;
     font-family: var(--body-font);
     font-size: var(--type-ramp-base-font-size);
     line-height: var(--type-ramp-base-line-height);
     margin: 0;
+    background: #F4F7FF;
+}
+
+.period-selector .fluent-datepicker {
+    margin: 0 0.5rem;
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "siteheader"
-        "main";
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1rem;
 }
 
 .siteheader {
     grid-area: siteheader;
-    background-color: #f7f7f7;
+    background-color: var(--primary) !important;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-start;
     height: 3.5rem;
     display: flex;
     align-items: center;
     white-space: nowrap;
-    padding-left: 1.5rem;
+    padding: 0 1.5rem;
 }
 
     .siteheader a {
-        padding-inline-end: 10px;
+        padding-inline-end: 10px; 
+        color: white;;
     }
-
-.main {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "navigation content";
-    grid-area: main;
-}
 
 .navigation {
     grid-area: navigation;
@@ -72,17 +125,18 @@ body {
         }
 
 .content {
-    grid-area: content;
-    --elevation: 2;
-    background-color: var(--fill-color);
+    grid-area: flex;
+    --elevation: 2; 
     color: var(--neutral-foreground-rest);
-    padding-inline-start: calc(var(--design-unit) * 6px);
-    padding-inline-end: calc(var(--design-unit) * 6px);
+}
+
+main {
+    padding: 0 1.5rem;
 }
 
 
 #blazor-error-ui {
-    background: lightyellow;
+    background: light#FBC756;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
@@ -148,4 +202,90 @@ body {
     position: relative;
     padding: 1rem 1rem;
     border: 1px solid transparent;
+}
+
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    margin: 0 0 1rem 0;
+    background: var(--white);
+    border-radius: 10px;
+}
+
+.overlay {
+    background: rgba(62, 133, 240, 0.2) !important;
+}
+
+.calendarView .fluent-calendar .change-month {
+    display: none !important;
+} 
+
+.calendarView .fluent-calendar .day span {
+    height: 26px;
+    width: 26px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.calendarView .fluent-calendar .day .weekend,
+.calendarView .fluent-calendar .day .Regular {
+    color: #FD4E5D;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
+.calendarView .fluent-calendar .day .DonorDay {
+    background: #FBC756 !important;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
+
+.calendarView .fluent-calendar .day .NonPayed {
+    background: var(--gray-6);
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
+.fluent-calendar .day[selected] {
+    color: inherit !important;
+    border: none !important;
+    background: inherit !important;
+}
+
+.legend {
+    display: flex;
+    gap: 10px;
+}
+
+.legend span {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.legend .Regular {
+
+    background: var(--green-3);
+    color: var(--white);
+}
+
+.legend .DonorDay {
+    color: var(--black);
+    background: #FBC756;
+}
+
+.legend .NonPayed {
+    color: var(--black);
+    background: var(--gray-6);
 }

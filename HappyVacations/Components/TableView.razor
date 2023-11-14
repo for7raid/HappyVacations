@@ -1,10 +1,9 @@
 ﻿<div class="valcation-table">
-    <table>
+    <table class="planner-table">
         <thead>
             <tr>
                 <th></th>
                 <th>Месяц</th>
-                <th></th>
                 <th></th>
 
                 @for (var item = Start; item <= End; item = item.AddMonths(1))
@@ -12,11 +11,11 @@
                     <th colspan="@DateTime.DaysInMonth(item.Year, item.Month)">@item.ToString("MMMM")</th>
                 }
                 <th></th>
+                <th></th>
             </tr>
             <tr>
 
                 <th>Имя</th>
-                <th>Роль</th>
                 <th>Дней</th>
                 <th>Инд</th>
                 @for (var item = Start.Date; item <= End; item = item.AddDays(1))
@@ -24,6 +23,7 @@
                     <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
                 }
                 <th>Рабочих дней</th>
+                <th>Доступные SP на фичи</th>
             </tr>
         </thead>
         <tbody>
@@ -37,9 +37,14 @@
 
                     <tr>
 
-                        <td>@employee.Name <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" /> </td>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                <b>@employee.Name</b> 
+                                <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" />
+                            </div>
+                            <span>@employee.Role</span>
+                        </td>
 
-                        <td>@employee.Role</td>
                         <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
                         <td>@VacationCalculatorService.SalaryIndex(employee, Start, End, CalendarExceptions).ToString("0.00")</td>
 
@@ -50,16 +55,18 @@
                             var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
 
-                            <td class="@GetCellClass(day) @(error.HasError ? " error":"")" @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
-
-                                @if (day is not null)
-                                {
-                                    <strong>@day</strong>
-                                }
+                            <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
+                                <span class="badge @GetCellClass(day) @(error.HasError ? " error":"")">
+                                    @if (day is not null)
+                                    {
+                                        @day
+                                    }
+                                </span>
                             </td>
                         }
 
                         <td>@VacationCalculatorService.GetWorkDaysInPeriod(employee, Start, End, CalendarExceptions)</td>
+                        <td>@VacationCalculatorService.GetAvailableSpDays(employee, Team, Start, End, CalendarExceptions)</td>
                     </tr>
 
                 }
@@ -68,7 +75,7 @@
                 {
                     <tr>
                         <td></td>
-                        <td style="font-style:italic">Пересечения</td>
+                        <td style="font-style:italic">Пересечения\Итого</td>
                         <td></td>
                         <td></td>
 
@@ -77,8 +84,10 @@
 
                             var count = role.Count(e => e.Items.Any(i => i.Date.Date == item && !i.Cancelled && i.ItemType == VacationItemType.Regular));
 
-                            <td class="warning-@count">
-                                @(count > 1 ? count.ToString() : string.Empty)
+                            <td>
+                                <span  class="warning-@count">
+                                    @(count > 1 ? count.ToString() : string.Empty)
+                                </span>
                             </td>
                         }
                         <td></td>
@@ -109,6 +118,9 @@
 
     [Parameter]
     public EventCallback<Employee> EditEmployee { get; set; }
+
+    [Parameter]
+    public Team Team { get; set; }
 
     [Parameter]
     public EventCallback<Tuple<Employee, DateTime>> EditDateCell { get; set; }

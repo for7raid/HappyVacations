@@ -1,4 +1,5 @@
 ﻿using HappyVacations.Models;
+using HappyVacations.Repos;
 
 namespace HappyVacations.Services
 {
@@ -93,6 +94,16 @@ namespace HappyVacations.Services
         {
             var end = month.AddMonths(1).AddDays(-1);
             return GetWorkDaysInPeriod(employee, month, end, CalendarExceptions);
+        }
+
+        public double GetAvailableSpDays(Employee employee, Team team, DateTime start, DateTime end, IEnumerable<CalendarException> CalendarExceptions)
+        {
+            var workHoursTotal = GetWorkDaysInPeriod(employee, start, end, CalendarExceptions);
+            var teamHoursPerSP = team.HoursPerSP;
+            var teamOverheads = team.Overheads;
+            var teamOperatingExpenses = team.OperatingExpenses;
+            
+            return workHoursTotal / teamHoursPerSP * (1 - teamOverheads) * (1 - teamOperatingExpenses);
         }
 
         private void FillWorkDayByMonth(DateTime month, IEnumerable<CalendarException> CalendarExceptions)

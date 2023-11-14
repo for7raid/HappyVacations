@@ -1,0 +1,34 @@
+﻿@implements IDialogContentComponent<Team>
+
+<EditForm Model="@Content" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <FluentValidationSummary />
+
+
+    <FluentStack Orientation="Orientation.Vertical">
+        <FluentTextField @bind-Value="Content.Name">Имя</FluentTextField>
+
+        <FluentNumberField @bind-Value="Content.HoursPerSP">Часов в story point</FluentNumberField>
+
+        <FluentNumberField @bind-Value="Content.Overheads" Step="0.1">Накладные расходы в %</FluentNumberField>
+
+        <FluentNumberField @bind-Value="Content.OperatingExpenses" Step="0.1">Операционные расходы в %</FluentNumberField>
+
+        <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent">Сохранить</FluentButton>
+    </FluentStack>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Team Content { get; set; } = default!;
+
+    [CascadingParameter]
+    public FluentDialog? Dialog { get; set; }
+
+    private void HandleValidSubmit(EditContext editContext)
+    {
+
+        Dialog!.CloseAsync(true);
+        // Process the valid form
+    }
+}

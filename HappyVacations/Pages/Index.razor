@@ -3,19 +3,43 @@
 @if (team is not null)
 {
     <div>
+        <div class="page-header ">
+            <div class="d-flex align-items-center period-selector">
+                Период с
+                <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
+                <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+            </div>
+            <div class="d-flex align-items-center">
+                <FluentSwitch class="mr-1" @bind-Value=listView>Все сотрудники</FluentSwitch>
+                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить сотрудника</FluentButton> 
+            </div>
+        </div>
 
-        Период с
-        <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
-        <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+        @if (listView) {
+            <div class="container">
+                <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
+            </div>
+        } else {
+            <div class="container mt-1">
+                <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
+            </div>
+        }
+        
+        <div class="legend container mt-1">
+            <div>
+                <span class="Regular">O</span> - Отпуск
+            </div>
+            <div>
+                <span class="DonorDay">Д</span> - Донорский
+            </div>
+            <div>
+                <span class="NonPayed">С</span> - За свой счёт
+            </div>
+            <div>
+                <span class="">Х</span> - Отменён\Перенесён
+            </div>
+        </div>
 
-          
-
-        <FluentButton OnClick="AddNewEmployee">Добавить нового сотрудника</FluentButton>
-
-
-        <TableView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
-
-        <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
     </div>
 } 
 else
@@ -33,6 +57,7 @@ else
 
     public DateTime Start { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
     public DateTime? End { get; set; } = new DateTime(DateTime.Now.Year, 12, 31);// new DateTime(DateTime.Now.Year, 12, 31);
+    public bool listView { get; set; } = true;
 
     [Parameter]
     public string TeamId { get; set; }
@@ -49,8 +74,6 @@ else
 
         Employees = await repository.GetEmployees(TeamId);
     }
-
-
 
     private async Task AddNewEmployee()
     {

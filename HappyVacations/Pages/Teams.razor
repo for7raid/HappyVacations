@@ -1,0 +1,82 @@
+﻿@page "/teams"
+
+<PageTitle>Команды</PageTitle>
+
+<div class="page-header">    
+    <div></div>
+    <FluentButton Appearance="Appearance.Accent" OnClick="AddNewTeam">
+        Добавить
+    </FluentButton> 
+</div>
+
+<TeamsList Teams=@teamsList EditItem=EditTeam></TeamsList>
+
+@inject IDialogService DialogService
+@inject IRepository repository
+
+@code {
+    List<Team> teamsList { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        teamsList = await repository.GetTeamsList();
+    }
+
+    private async Task AddNewTeam()
+    {
+        var item = new Team() { };
+
+        DialogParameters<Team> parameters = new()
+            {
+                Title = $"Добавить Команду",
+                PrimaryAction = null,
+                SecondaryAction = null,
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false,
+                Width = "400px",
+                Height = "400px",
+                Content = item
+            };
+
+        IDialogReference dialog = await DialogService.ShowDialogAsync<TeamEditor, Team>(parameters);
+        DialogResult? result = await dialog.Result;
+
+
+        if (result.Data is bool b && b)
+        {
+            teamsList.Add(item);
+            await repository.SaveTeam(item);
+
+        }
+    }
+
+    private async Task EditTeam(Team team)
+    {
+        var item = new Team() { Name = team.Name };
+
+        DialogParameters<Team> parameters = new()
+            {
+                Title = $"Изменить команду",
+                PrimaryAction = null,
+                SecondaryAction = null,
+                PrimaryActionEnabled = false,
+                SecondaryActionEnabled = false,
+                Width = "400px",
+                Height = "400px",
+                Content = item
+            };
+
+        IDialogReference dialog = await DialogService.ShowDialogAsync<TeamEditor, Team>(parameters);
+        DialogResult? result = await dialog.Result;
+
+
+        if (result.Data is bool b && b)
+        {
+            team.Name = item.Name;
+
+            await repository.SaveTeam(team);
+        }
+    }
+
+}

@@ -45,6 +45,13 @@ namespace HappyVacations.Repos
             return allDocs.FirstOrDefault();
         }
 
+        public async Task<List<Team>> GetTeamsList()
+        {
+            var conditions = new List<ScanCondition>{};
+            var allDocs = await context.ScanAsync<Team>(conditions).GetRemainingAsync();
+            return allDocs;
+        }
+
         public async Task RemoveCalendarException(CalendarException calendarException)
         {
             await context.DeleteAsync(calendarException);

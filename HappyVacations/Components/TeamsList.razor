@@ -1,0 +1,43 @@
+﻿<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Часов в story point</th>
+                <th>Накладные расходы в %</th>
+                <th>Операционные расходы в %</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var team in Teams.OrderBy(e => e.Name))
+            {
+                <tr>
+                    <td><a href="@team.Id/@team.Name">@team.Id</a>  </td>
+                    <td>@team.Name</td>
+                    <td>@team.HoursPerSP</td>
+                    <td>@team.Overheads</td>
+                    <td>@team.OperatingExpenses</td>
+                    <td>                    
+                        <FluentStack Orientation="Orientation.Horizontal">
+                            <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditItem.InvokeAsync(team))" />
+                        </FluentStack>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
+
+@inject IDialogService DialogService
+@inject VacationCalculatorService VacationCalculatorService
+
+@code {
+    [Parameter]
+    public List<Team> Teams { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<Team> EditItem { get; set; }
+
+}

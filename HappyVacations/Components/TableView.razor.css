@@ -1,134 +1,106 @@
 ﻿.valcation-table {
-    width: 100vw;
-   /* height: 100vh;*/
-    overflow: scroll;
-    border: 1px solid #777777;
-}
-
-    .valcation-table table {
-        border-spacing: 0;
-    }
-
-    .valcation-table th {
-        border-left: none;
-        border-right: 1px solid #bbbbbb;
-        padding: 2px;
-        position: sticky;
-        top: 0;
-        background: #727272;
-        color: #e0e0e0;
-        font-weight: normal;
-    }
-
-    .valcation-table td {
-        border-left: none;
-        border-right: 1px solid #bbbbbb;
-        border-bottom: 1px solid #bbbbbb;
-        padding: 2px;
-        background: #fff;
-    }
-
-        .valcation-table th:nth-child(1),
-        .valcation-table td:nth-child(1) {
-            position: sticky;
-            left: 0;
-            width: 160px;
-            min-width: 160px;
-        }
-
-        .valcation-table th:nth-child(2),
-        .valcation-table td:nth-child(2):not([rowspan]) {
-            position: sticky;
-            /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-            /* 0 + 2 + 160 + 2 + 1 */
-            left: 165px;
-            width: 80px;
-            min-width: 80px;
-        }
-
-        .valcation-table th:nth-child(3),
-        .valcation-table td:nth-child(3) {
-            position: sticky;
-            /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-            /* 0 + 2 + 160 + 2 + 2 + 80 + 2 + 1 */
-            left: 250px;
-            width: 40px;
-            min-width: 40px;
-        }
-
-        .valcation-table th:nth-child(4),
-        .valcation-table td:nth-child(4) {
-            position: sticky;
-            /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-            /* 0 + 2 + 150 + 2 + 1 + 80 + 1 + 40 */
-            left: 295px;
-            width: 40px;
-            min-width: 40px;
-        }
-
-        .valcation-table td:nth-child(1),
-        .valcation-table td:nth-child(2):not([rowspan]) {
-            background: #ffebb5;
-        }
-
-        .valcation-table td:nth-child(3),
-        .valcation-table td:nth-child(4) {
-            background: white;
-        }
+    overflow: auto;
+} 
 
     .valcation-table th:nth-child(1),
-    .valcation-table th:nth-child(2),
-    .valcation-table th:nth-child(3),
-    .valcation-table th:nth-child(4) {
-        z-index: 2;
+    .valcation-table td:nth-child(1) {
+        position: sticky;
+        left: 0;
+        width: 160px;
+        min-width: 160px;
+        text-align: left;
     }
 
-    .valcation-table th:last-child,
-    .valcation-table td:last-child {
+    .valcation-table th:nth-child(2),
+    .valcation-table td:nth-child(2):not([rowspan]) {
         position: sticky;
-        right: 0;
+        /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
+        /* 0 + 2 + 160 + 2 + 1 */
+        left: 175px;
         width: 80px;
         min-width: 80px;
     }
 
-    .valcation-table th.weekend {
-        background: pink;
-        color: black;
-    }
+    .valcation-table th:nth-child(3),
+    .valcation-table td:nth-child(3) {
+        position: sticky;
+        /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
+        /* 0 + 2 + 160 + 2 + 2 + 80 + 2 + 1 */
+        left: 307px;
+        width: 40px;
+        min-width: 40px;
+    } 
 
-    .valcation-table td.Regular {
-        background: pink;
-        color: black;
-    }
+.valcation-table th:nth-child(1),
+.valcation-table th:nth-child(2),
+.valcation-table th:nth-child(3) {
+    z-index: 6;
+}
 
-    .valcation-table td.DonorDay {
-        background: yellow;
-        color: black;
-    }
+.valcation-table th:nth-last-child(-n + 2),
+.valcation-table td:nth-last-child(-n + 2) {
+    position: sticky;
+    right: 0;
+    width: 150px;
+    min-width: 150px;
+}
 
-    .valcation-table td.NonPayed {
-        background: gray;
-        color: black;
-    }
+/* .valcation-table th:nth-child(-n + 5),
+.valcation-table td:nth-child(-n + 5) {
+    position: sticky;
+    right: 50;
+    width: 90px;
+    min-width: 90px;
+} */
 
-    .valcation-table td.warning-2 {
-        background: orange;
-        color: black;
-    }
+.valcation-table th.weekend {
+    background: var(--red);
+    color: var(--white);
+}
 
-    .valcation-table td.warning-3,
-    .valcation-table td.warning-4,
-    .valcation-table td.warning-5,
-    .valcation-table td.warning-6,
-    .valcation-table td.warning-7,
-    .valcation-table td.warning-8,
-    .valcation-table td.warning-9,
-    .valcation-table td.warning-10 {
-        background: red;
-        color: black;
-    }
+.valcation-table td span.badge {
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    display: inline-block;
+}
 
-    .valcation-table td.error {
-        background: red;
-        color: black;
-    }
+.valcation-table td span.Regular {
+    background: var(--green-3);
+    color: var(--white);
+}
+
+.valcation-table td span.DonorDay {
+    background: var(--yellow);
+    color: var(--gray-1);
+}
+
+.valcation-table td span.NonPayed {
+    background: var(--gray-6);
+}
+
+.valcation-table td span.warning-2 {
+    background: var(--orange);
+    color: var(--white);
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.valcation-table td span.warning-3,
+.valcation-table td span.warning-4,
+.valcation-table td span.warning-5,
+.valcation-table td span.warning-6,
+.valcation-table td span.warning-7,
+.valcation-table td span.warning-8,
+.valcation-table td span.warning-9,
+.valcation-table td span.warning-10 {
+    background: var(--state-warning);
+    color: white;
+}
+
+.valcation-table td span.error {
+    background: var(--state-error);
+    color: white;
+}

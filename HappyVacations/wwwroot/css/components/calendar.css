@@ -1,0 +1,54 @@
+
+
+.fluent-datepicker svg {
+    fill: var(--primary);
+}
+
+.fluent-datepicker-popup {
+    background: var(--secondary-dark) !important;
+    border-radius: 10px;
+} 
+
+.fluent-datepicker-popup .day {
+    color: var(--gray-6) !important;
+}
+
+.fluent-datepicker-popup .day[inactive] {
+    color: var(--gray-6) !important;
+    opacity: 0.4;
+}
+
+.fluent-datepicker-popup .day[selected],
+.fluent-calendar:not([readonly]) .day:not([disabled]):not([inactive]):not([today]):hover {
+    background: var(--primary) !important;
+    border: 1px solid;
+    border-radius: 50% !important;
+    color: #fff;
+}
+
+.fluent-calendar:not([readonly]) .day:not([disabled]):not([inactive]):not([today]):hover > .weekend {
+    color: #fff;
+}
+
+.fluent-calendar .previous-month:hover, 
+.fluent-calendar .next-month:hover {
+    background: transparent !important;
+}
+
+.fluent-calendar .previous-month:hover svg, 
+.fluent-calendar .next-month:hover svg {
+    fill: var(--gray-7) !important;
+}
+
+.fluent-datepicker-popup .week-day {
+    color: var(--gray-7) !important;
+}
+
+.fluent-datepicker-popup .title {
+    color: var(--gray-7) !important;
+    width: auto !important;
+}
+
+.fluent-calendar .change-month {
+    margin-right: 0 !important;
+}
