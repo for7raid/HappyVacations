@@ -1,6 +1,6 @@
 name: DeployToGitHubPages
 env:
-  PUBLISH_DIR: bin/release/net7.0/browser-wasm/publish/wwwroot
+  PUBLISH_DIR: /home/runner/work/HappyVacations/HappyVacations/HappyVacations/bin/Release/net7.0/wwwroot
 
 # Controls when the action will run
 on:
