@@ -4,19 +4,19 @@
 {
     <div>
         <div class="page-header ">
-            <div class="d-flex align-items-center period-selector">
+            <div class="d-flex align-items-center periodSelectorSection">
                 Период с
                 <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
                 <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center employeesViewModeSection">
                 <FluentLabel Class="mr-1">Вид</FluentLabel>
-                <FluentSelect TOption=bool ValueChanged="@(c=> listView = bool.Parse(c))" class="mr-1">
+                <FluentSelect TOption=bool ValueChanged="@(c=> listView = bool.Parse(c))" class="mr-1 employeesView__selector">
                     <FluentOption Value=true>Все сотрудники</FluentOption>
                     <FluentOption Value=false>Один сотрудник</FluentOption>
                 </FluentSelect>
 
-                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee">Добавить сотрудника</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee" class="employeesView__addButton">Добавить сотрудника</FluentButton>
             </div>
         </div>
 

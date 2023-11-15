@@ -1,6 +1,6 @@
 ﻿<div class="calendarView">
-    <div class="d-flex align-items-center mb-1">
-        <div class="d-flex align-items-center mr-1"> 
+    <div class="d-flex align-items-center mb-1 calendarView__header">
+        <div class="d-flex align-items-center mr-1 employeeSelectorSection"> 
             <label for="people-listbox" class="mr-1">Сотрудник</label>
             <FluentSelect TOption="Employee"
                         Items="@Employees"
@@ -9,7 +9,8 @@
                         Height="250px"
                         OptionValue="@(p => p.Id)"
                         OptionText="@(p => p.Name)"
-                        @bind-SelectedOption="@SelectedEmployee" />
+                        @bind-SelectedOption="@SelectedEmployee" 
+                        class="employeeSelectorSection__selector"/>
         </div>
 
     
