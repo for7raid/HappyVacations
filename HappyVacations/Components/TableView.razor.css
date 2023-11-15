@@ -80,7 +80,7 @@
 }
 
 .valcation-table td span.warning-2 {
-    background: var(--orange);
+    background: var(--state-warning);
     color: var(--white);
     height: 20px;
     width: 20px;
@@ -88,17 +88,21 @@
     display: inline-block;
 }
 
-.valcation-table td span.warning-3,
-.valcation-table td span.warning-4,
-.valcation-table td span.warning-5,
-.valcation-table td span.warning-6,
-.valcation-table td span.warning-7,
-.valcation-table td span.warning-8,
-.valcation-table td span.warning-9,
-.valcation-table td span.warning-10 {
-    background: var(--state-warning);
-    color: white;
-}
+    .valcation-table td span.warning-3,
+    .valcation-table td span.warning-4,
+    .valcation-table td span.warning-5,
+    .valcation-table td span.warning-6,
+    .valcation-table td span.warning-7,
+    .valcation-table td span.warning-8,
+    .valcation-table td span.warning-9,
+    .valcation-table td span.warning-10 {
+        background: var(--state-error);
+        color: white;
+        height: 20px;
+        width: 20px;
+        border-radius: 3px;
+        display: inline-block;
+    }
 
 .valcation-table td span.error {
     background: var(--state-error);
