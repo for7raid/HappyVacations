@@ -79,14 +79,7 @@
 
         // Firebase configuration details
         // replace this configuration with your own configuration details
-        const firebaseConfig = {
-            apiKey: "AIzaSyA4G8UE1E4noKHoG4uORUhd7aUS9XUmX-4",
-            authDomain: "happy-vacation-test.firebaseapp.com",
-            projectId: "happy-vacation-test",
-            storageBucket: "happy-vacation-test.appspot.com",
-            messagingSenderId: "859562352554",
-            appId: "1:859562352554:web:ccaa4478df6d638fec15d3"
-        };
+        import { firebaseConfig } from './env.js';
 
         // Initialize Firebase with the configuration details
         const app = initializeApp(firebaseConfig);
