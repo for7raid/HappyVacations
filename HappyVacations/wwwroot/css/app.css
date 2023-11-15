@@ -70,7 +70,7 @@ body {
     background: #F4F7FF;
 }
 
-.period-selector .fluent-datepicker {
+.periodSelectorSection .fluent-datepicker {
     margin: 0 0.5rem;
 }
 
@@ -209,7 +209,7 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    margin: 0 0 1rem 0;
+    margin: 1rem 0 1rem 0;
     background: var(--white);
     border-radius: 10px;
 }
@@ -288,4 +288,53 @@ main {
 .legend .NonPayed {
     color: var(--black);
     background: var(--gray-6);
+}
+
+@media (max-width: 968px) {
+
+    .page-header {
+        flex-direction: column;
+    }
+
+    .periodSelectorSection, 
+    .employeesViewModeSection {
+        flex-direction: column;
+        align-items: normal;
+    }
+
+        .periodSelectorSection .fluent-datepicker {
+            margin: 0.3rem 0;
+        }
+
+        .employeesViewModeSection .employeesView__selector {
+            margin: 0.3rem 0;
+        }
+
+        .employeesViewModeSection .employeesView__addButton {
+            margin-top: 0.5rem;
+        }
+
+    .calendarView .stack-horizontal {
+        justify-content: center !important;
+    }
+
+    .calendarView__header {
+        flex-direction: column;
+        align-items: normal;
+    }
+
+        .calendarView__header .employeeSelectorSection {
+            flex-direction: column;
+            align-items: normal;
+            margin: 0;
+        }
+
+            .employeeSelectorSection .employeeSelectorSection__selector {
+                width: 100% !important;
+                margin: 0.3rem 0;
+            }
+
+    .legend  {
+        flex-flow: wrap;
+    }
 }
