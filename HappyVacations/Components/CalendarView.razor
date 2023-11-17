@@ -1,19 +1,19 @@
 ﻿<div class="calendarView">
     <div class="d-flex align-items-center mb-1 calendarView__header">
-        <div class="d-flex align-items-center mr-1 employeeSelectorSection"> 
+        <div class="d-flex align-items-center mr-1 employeeSelectorSection">
             <label for="people-listbox" class="mr-1">Сотрудник</label>
             <FluentSelect TOption="Employee"
-                        Items="@Employees"
-                        Id="people-listbox"
-                        Width="200px"
-                        Height="250px"
-                        OptionValue="@(p => p.Id)"
-                        OptionText="@(p => p.Name)"
-                        @bind-SelectedOption="@SelectedEmployee" 
-                        class="employeeSelectorSection__selector"/>
+                          Items="@Employees"
+                          Id="people-listbox"
+                          Width="200px"
+                          Height="250px"
+                          OptionValue="@(p => p.Id)"
+                          OptionText="@(p => p.Name)"
+                          @bind-SelectedOption="@SelectedEmployee"
+                          class="employeeSelectorSection__selector" />
         </div>
 
-    
+
         @if (SelectedEmployee is not null)
         {
             <div class="d-flex">
@@ -24,12 +24,13 @@
         }
     </div>
 
-    @if (SelectedEmployee is not null) {
+    @if (SelectedEmployee is not null)
+    {
         <FluentStack Wrap=true HorizontalGap="20" VerticalGap="20">
             @for (var item = Start; item <= End; item = item.AddMonths(1))
             {
                 <FluentCalendar PickerMonth="item"
-                        ValueChanged="@(async v=> await EditDateCell.InvokeAsync(new Tuple<Employee, DateTime>(SelectedEmployee, v.Value)))">
+                                ValueChanged="@(async v=> await EditDateCell.InvokeAsync(new Tuple<Employee, DateTime>(SelectedEmployee, v.Value)))">
                     <DaysTemplate>
                         <span class="@GetCellClass(context.Date)">
                             @context.DayNumber
@@ -81,6 +82,7 @@
 
         var className = string.Empty;
 
+
         if (item is not null)
         {
             if (item.Cancelled)
@@ -89,8 +91,20 @@
             }
             else
             {
-                className = className + " " + item.ItemType.ToString() + " ";
+                var error = VacationCalculatorService.Validate(SelectedEmployee, item, CalendarExceptions);
+
+                if (error.HasError)
+                {
+                    className += " error ";
+                }
+                else
+                {
+
+                    className = className + " " + item.ItemType.ToString() + " ";
+                }
             }
+
+            
 
         }
 
@@ -101,8 +115,9 @@
 
         if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
         {
-            if (item is not null) {
-                return "weekend " + item.ItemType.ToString();    
+            if (item is not null)
+            {
+                return "weekend " + item.ItemType.ToString();
             }
             return "weekend";
         }

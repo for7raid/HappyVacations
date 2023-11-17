@@ -26,3 +26,12 @@
     display: block;
     border-radius: 50%;
 }
+
+.fluent-calendar div[part=day] .error {
+    background: var(--state-error) !important;
+    color: white !important;
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
