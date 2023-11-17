@@ -4,7 +4,18 @@
             <tr>
                 <th></th>
                 <th>Месяц</th>
-                <th></th>
+                <th>
+                    <FluentIcon Id="myLongText" Icon="Icons.Regular.Size24.QuestionCircle" />
+
+                    <FluentTooltip Anchor="myLongText"
+                                   Delay="300"
+                                   MaxWidth="400px"
+                                   Position="TooltipPosition.Top">
+
+                        Индект зарплаты, условно показывает, в какие месяца выгоднее ходить в отпуск.
+                        Подробнее на странице проекта <a target="_blank" href="https://github.com/for7raid/HappyVacations">https://github.com/for7raid/HappyVacations</a>
+                    </FluentTooltip>
+                </th>
 
                 @for (var item = Start; item <= End; item = item.AddMonths(1))
                 {
@@ -62,7 +73,7 @@
                                 @employee.Name
                                 <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" />
                             </div>
-                           
+
                         </td>
 
                         <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
@@ -94,11 +105,11 @@
                 @if (role.Count() > 1)
                 {
                     <tr>
-                       
+
                         <td style="font-style:italic">Пересечения</td>
                         <td></td>
                         <td></td>
-                        
+
 
                         @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                         {

@@ -1,5 +1,4 @@
 ﻿using HappyVacations.Models;
-using HappyVacations.Repos;
 
 namespace HappyVacations.Services
 {
@@ -28,7 +27,7 @@ namespace HappyVacations.Services
                     (exception is not null && exception.ExceptionType == CalendarExceptionType.Weekend)
                     );
 
-                return (hasError, hasError ? "Отпуск не может закончится перед выходными или праздникам" : string.Empty);
+                return (hasError, hasError ? "Отпуск не может закончиться перед выходными или праздникам" : string.Empty);
             }
 
             return (false, string.Empty);
