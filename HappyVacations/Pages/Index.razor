@@ -16,7 +16,14 @@
                     <FluentOption Value=false>Один сотрудник</FluentOption>
                 </FluentSelect>
 
-                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee" class="employeesView__addButton">Добавить сотрудника</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee" class="employeesView__addButton mr-1">Добавить сотрудника</FluentButton>
+
+                <FluentAnchor Appearance="Appearance.Hypertext"
+                              Href="https://github.com/for7raid/HappyVacations" Target="_blank" Rel="noreferrer noopener"
+                              title="Отпуска на GitHub" aria-label="HappyVacations Repo"
+                              class="ml-1">
+                    <FluentIcon Value="@(new DemoIcons.Size20.GitHub())" Color="Color.FillInverse" />
+                </FluentAnchor>
             </div>
         </div>
 
@@ -44,7 +51,7 @@
                 <span class="NonPayed">С</span> - За свой счёт
             </div>
             <div>
-                <span class="error">О</span> - Отпуск не может закончиться перед выходными или праздникам
+                <span class="error">О</span> - Отпуск не может закончиться перед выходными или праздником
             </div>
             <div>
                 <span class="">Х</span> - Отменён\Перенесён

@@ -15,7 +15,7 @@ namespace HappyVacations.Services
         }
         public (bool HasError, string Message) Validate(Employee employee, VacationItem item, IEnumerable<CalendarException> CalendarExceptions)
         {
-            if (item is not null && item.ItemType == VacationItemType.Regular)
+            if (item is not null && item.ItemType == VacationItemType.Regular && !item.Cancelled)
             {
                 var nextDate = item.Date.AddDays(1);
                 var hasNextDate = employee.Items.Any(i => i.Date == nextDate & !i.Cancelled & i.ItemType == VacationItemType.Regular);
@@ -27,7 +27,7 @@ namespace HappyVacations.Services
                     (exception is not null && exception.ExceptionType == CalendarExceptionType.Weekend)
                     );
 
-                return (hasError, hasError ? "Отпуск не может закончиться перед выходными или праздникам" : string.Empty);
+                return (hasError, hasError ? "Отпуск не может закончиться перед выходными или праздником" : string.Empty);
             }
 
             return (false, string.Empty);
