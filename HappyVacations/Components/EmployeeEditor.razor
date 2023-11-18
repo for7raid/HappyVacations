@@ -1,4 +1,5 @@
-﻿@implements IDialogContentComponent<Employee>
+﻿@using HappyVacations.ViewModels
+@implements IDialogContentComponent<EmployeeEditViewModel>
 
 <EditForm Model="@Content" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -6,8 +7,9 @@
 
 
     <FluentStack Orientation="Orientation.Vertical">
-        <FluentTextField @bind-Value="Content.Name">Имя</FluentTextField>
-        <FluentTextField @bind-Value="Content.Role">Роль</FluentTextField>
+        <FluentTextField @bind-Value="Content.Item.Name" Autofocus=true>Имя</FluentTextField>
+        <FluentLabel>Роль</FluentLabel>
+        <FluentCombobox AriaLabel="Pre-selected option" Items="Content.Roles" @bind-Value="@Content.Item.Role" Height="200px"/>
 
         <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent">Сохранить</FluentButton>
     </FluentStack>
@@ -15,7 +17,7 @@
 
 @code {
     [Parameter]
-    public Employee Content { get; set; } = default!;
+    public EmployeeEditViewModel Content { get; set; } = default!;
 
     [CascadingParameter]
     public FluentDialog? Dialog { get; set; }

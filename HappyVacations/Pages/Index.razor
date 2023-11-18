@@ -1,4 +1,5 @@
 ﻿@page "/{teamId}/{teamName}"
+@using HappyVacations.ViewModels
 
 @if (team is not null)
 {
@@ -96,8 +97,13 @@ else
     private async Task AddNewEmployee()
     {
         var item = new Employee() { TeamId = team.Id };
+        var viewModel = new EmployeeEditViewModel
+            {
+                Item = item,
+                Roles = Employees.Where(e => !string.IsNullOrWhiteSpace(e.Role)).Select(e => e.Role!).Distinct()
+            };
 
-        DialogParameters<Employee> parameters = new()
+        DialogParameters<EmployeeEditViewModel> parameters = new()
             {
                 Title = $"Добавить нового сотрудника",
                 PrimaryAction = null,
@@ -106,10 +112,10 @@ else
                 SecondaryActionEnabled = false,
                 Width = "400px",
                 Height = "400px",
-                Content = item
+                Content = viewModel
             };
 
-        IDialogReference dialog = await DialogService.ShowDialogAsync<EmployeeEditor, Employee>(parameters);
+        IDialogReference dialog = await DialogService.ShowDialogAsync<EmployeeEditor, EmployeeEditViewModel>(parameters);
         DialogResult? result = await dialog.Result;
 
 
@@ -124,8 +130,13 @@ else
     private async Task EditEmployee(Employee employee)
     {
         var item = new Employee() { Name = employee.Name, Role = employee.Role };
+        var viewModel = new EmployeeEditViewModel
+            {
+                Item = item,
+                Roles = Employees.Where(e => !string.IsNullOrWhiteSpace(e.Role)).Select(e => e.Role!).Distinct()
+            };
 
-        DialogParameters<Employee> parameters = new()
+        DialogParameters<EmployeeEditViewModel> parameters = new()
             {
                 Title = $"Изменить сотрудника",
                 PrimaryAction = null,
@@ -134,10 +145,10 @@ else
                 SecondaryActionEnabled = false,
                 Width = "400px",
                 Height = "400px",
-                Content = item
+                Content = viewModel
             };
 
-        IDialogReference dialog = await DialogService.ShowDialogAsync<EmployeeEditor, Employee>(parameters);
+        IDialogReference dialog = await DialogService.ShowDialogAsync<EmployeeEditor, EmployeeEditViewModel>(parameters);
         DialogResult? result = await dialog.Result;
 
 
