@@ -9,6 +9,9 @@ namespace HappyVacations.Models
         [Required]
         public string Name { get; set; } = default!;
 
+        [Required]
+        public string Title { get; set; } = default!;
+
         public int HoursPerSP { get; set; } = 8;
 
         public int Overheads { get; set; } = 20;

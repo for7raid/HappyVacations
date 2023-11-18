@@ -38,7 +38,7 @@
                 PrimaryActionEnabled = false,
                 SecondaryActionEnabled = false,
                 Width = "400px",
-                Height = "400px",
+                Height = "600px",
                 Content = item
             };
 
@@ -56,7 +56,7 @@
 
     private async Task EditTeam(Team team)
     {
-        var item = new Team() { Name = team.Name, HoursPerSP = team.HoursPerSP, OperatingExpenses = team.OperatingExpenses, Overheads = team.Overheads };
+        var item = new Team() { Name = team.Name, HoursPerSP = team.HoursPerSP, OperatingExpenses = team.OperatingExpenses, Overheads = team.Overheads, Title = team.Title };
 
         DialogParameters<Team> parameters = new()
             {
@@ -66,7 +66,7 @@
                 PrimaryActionEnabled = false,
                 SecondaryActionEnabled = false,
                 Width = "400px",
-                Height = "400px",
+                Height = "600px",
                 Content = item
             };
 
@@ -80,6 +80,7 @@
             team.HoursPerSP = item.HoursPerSP;
             team.Overheads = item.Overheads;
             team.OperatingExpenses = item.OperatingExpenses;
+            team.Title = item.Title;
 
             await repository.SaveTeam(team);
         }
