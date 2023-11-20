@@ -19,6 +19,11 @@
     <None Include="wwwroot\404.html" />
   </ItemGroup>
 
+	<!-- For WASM, Trim Icons and Emojis Libs, -->
+	<!-- but not Core and Shared libs -->
+	<ItemGroup>
+		<TrimmerRootAssembly Include="Microsoft.FluentUI.AspNetCore.Components" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.14" />
