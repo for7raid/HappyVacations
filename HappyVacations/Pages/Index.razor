@@ -1,37 +1,42 @@
 ﻿@page "/{teamId}/{teamName}"
 @using HappyVacations.ViewModels
 
-@if (team is not null)
+<PageTitle>Календарь отпусков @team?.Title</PageTitle>
+
+    @if (team is not null)
 {
     <div>
         <div class="page-header ">
 
             <FluentLabel Typo="Typography.PageTitle">@team.Title</FluentLabel>
 
-            <div class="d-flex align-items-center periodSelectorSection">
-                Период с
-                <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
-                <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+                <div class="d-flex align-items-center periodSelectorSection">
+                    Период с
+                    <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
+                    <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+
+                    <FluentMenuButton Text="Быстрый выбор периода" Items="@quickItems" OnMenuChanged="HandleOnQuickMenuChanged"></FluentMenuButton>
+
+                </div>
+                <div class="d-flex align-items-center employeesViewModeSection">
+                    <FluentLabel Class="mr-1">Вид</FluentLabel>
+                    <FluentSelect TOption=bool ValueChanged="@(c=> listView = bool.Parse(c))" class="mr-1 employeesView__selector">
+                        <FluentOption Value=true>Все сотрудники</FluentOption>
+                        <FluentOption Value=false>Один сотрудник</FluentOption>
+                    </FluentSelect>
+
+                    <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee" class="employeesView__addButton">Добавить сотрудника</FluentButton>
+
+                    <FluentAnchor Appearance="Appearance.Hypertext"
+                                  Href="https://github.com/for7raid/HappyVacations" Target="_blank" Rel="noreferrer noopener"
+                                  title="Отпуска на GitHub" aria-label="HappyVacations Repo"
+                                  class="ml-2">
+                        <FluentIcon Value="@(new DemoIcons.Size20.GitHub())" Color="Color.FillInverse" />
+                    </FluentAnchor>
+                </div>
             </div>
-            <div class="d-flex align-items-center employeesViewModeSection">
-                <FluentLabel Class="mr-1">Вид</FluentLabel>
-                <FluentSelect TOption=bool ValueChanged="@(c=> listView = bool.Parse(c))" class="mr-1 employeesView__selector">
-                    <FluentOption Value=true>Все сотрудники</FluentOption>
-                    <FluentOption Value=false>Один сотрудник</FluentOption>
-                </FluentSelect>
 
-                <FluentButton Appearance="Appearance.Accent" OnClick="AddNewEmployee" class="employeesView__addButton">Добавить сотрудника</FluentButton>
-
-                <FluentAnchor Appearance="Appearance.Hypertext"
-                              Href="https://github.com/for7raid/HappyVacations" Target="_blank" Rel="noreferrer noopener"
-                              title="Отпуска на GitHub" aria-label="HappyVacations Repo"
-                              class="ml-2">
-                    <FluentIcon Value="@(new DemoIcons.Size20.GitHub())" Color="Color.FillInverse" />
-                </FluentAnchor>
-            </div>
-        </div>
-
-        @if (listView)
+            @if (listView)
         {
             <div class="container">
                 <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
@@ -87,6 +92,8 @@ else
     public string TeamName { get; set; }
 
     Team? team;
+
+    bool isQuickMenuOpened = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -208,6 +215,52 @@ else
             }
 
         }
+    }
+
+    private Dictionary<string, string> quickItems = new Dictionary<string, string>()
+    {
+        {"currentMonth","Текущий месяц + 1"},
+        //{"currentQuarter","Текущий квартал"},
+        {"nextQuarter","Следующий квартал"},
+        {"tillCurrentYear","До конца года"},
+        {"nextYear","Следующий год"}
+    };
+
+    private async Task HandleOnQuickMenuChanged(MenuChangeEventArgs args)
+    {
+        var currentYear = DateTime.Now.Year;
+        var currentQuarter = (int)Math.Ceiling(DateTime.Now.Month / 3.0);
+
+        switch (args.Id)
+        {
+            case "currentMonth":
+                Start = new DateTime(currentYear, DateTime.Now.Month, 1);
+                End = Start.AddMonths(2).AddDays(-1);
+                break;
+
+            case "nextQuarter":
+                if (currentQuarter < 4)
+                {
+                    Start = new DateTime(currentYear, (currentQuarter + 1) * 3, 1);
+                    End = Start.AddMonths(3).AddDays(-1);
+                }
+                else
+                {
+                    Start = new DateTime(currentYear + 1, 1, 1);
+                    End = Start.AddMonths(3).AddDays(-1);
+                }
+                break;
+            case "nextYear":
+                Start = new DateTime(currentYear + 1, 1, 1);
+                End = Start.AddYears(1).AddDays(-1);
+                break;
+            case "tillCurrentYear":
+            default:
+                Start = new DateTime(currentYear, DateTime.Now.Month - 1, 1);
+                End = new DateTime(currentYear, 12, 31);
+                break;
+        }
+
     }
 
 }
