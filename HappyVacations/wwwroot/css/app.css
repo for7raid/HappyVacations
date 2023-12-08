@@ -251,6 +251,14 @@ main {
     border-radius: 50%;
 }
 
+.calendarView .fluent-calendar .day .error {
+    background: var(--state-error);
+    width: var(--calendar-cell-size);
+    height: var(--calendar-cell-size);
+    display: block;
+    border-radius: 50%;
+}
+
 .fluent-calendar .day[selected] {
     color: inherit !important;
     border: none !important;
