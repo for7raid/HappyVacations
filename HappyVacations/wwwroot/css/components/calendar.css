@@ -5,12 +5,12 @@
 }
 
 .fluent-datepicker-popup {
-    background: var(--secondary-dark) !important;
+    /*background: var(--secondary-dark) !important;*/
     border-radius: 10px;
 } 
 
 .fluent-datepicker-popup .day {
-    color: var(--gray-6) !important;
+    /*color: var(--gray-6) !important;*/
 }
 
 .fluent-datepicker-popup .day[inactive] {

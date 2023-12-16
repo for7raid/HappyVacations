@@ -1,0 +1,39 @@
+﻿@inherits FluentCalendarBase
+
+<FluentInputLabel ForId="@Id" Label="@Label" AriaLabel="@AriaLabel" ChildContent="@LabelTemplate" Required="@Required" />
+
+<FluentTextField Id="@Id"
+                 Class="@ClassValue"
+                 Style="@StyleValue"
+                 Autofocus="@Autofocus"
+                 Appearance="@Appearance"
+                 Value="@DateAsString"
+                 @onclick="@OnCalendarOpenHandlerAsync"
+                 ReadOnly="@ReadOnly"
+                 Disabled="@Disabled"
+                 Required="@Required"
+                 Placeholder="@(Placeholder ?? Culture.DateTimeFormat.ShortDatePattern)"
+                 Name="@Name"
+                 @attributes="@AdditionalAttributes">
+    @((MarkupString)CalendarIcon)
+</FluentTextField>
+
+@if (Opened)
+{
+    <FluentOverlay @bind-Visible="@Opened" Dismissable="true" FullScreen="true" />
+    <FluentAnchoredRegion Anchor="@Id"
+                          HorizontalDefaultPosition="@HorizontalPosition.Right"
+                          HorizontalInset="true"
+                          VerticalDefaultPosition="@VerticalPosition.Unset"
+                          Shadow="ElevationShadow.Flyout"
+                          Class="fluent-datepicker-popup"
+                          Style="@($"z-index: {ZIndex.DatePickerPopup}; padding: 10px;")">
+        <FluentCalendar Culture="@Culture"
+                        DayFormat="@DayFormat"
+                        DisabledDateFunc="@DisabledDateFunc"
+                        DisabledSelectable="@DisabledSelectable"
+                        Value="@Value"
+                        View="CalendarViews.Months"
+                        ValueChanged="@OnSelectedDateAsync" />
+    </FluentAnchoredRegion>
+}

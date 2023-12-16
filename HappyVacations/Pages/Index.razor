@@ -6,14 +6,18 @@
     @if (team is not null)
 {
     <div>
-        <div class="page-header ">
+        <div class="page-header">
 
             <FluentLabel Typo="Typography.PageTitle">@team.Title</FluentLabel>
 
                 <div class="d-flex align-items-center periodSelectorSection">
                     Период с
-                    <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
-                    <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+
+                    <MyFluentMonthPicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))"></MyFluentMonthPicker> по
+                    <MyFluentMonthPicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+
+                    @* <FluentDatePicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))" /> по
+                   <FluentDatePicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" /> *@
 
                     <FluentMenuButton Text="Быстрый выбор периода" Items="@quickItems" OnMenuChanged="HandleOnQuickMenuChanged"></FluentMenuButton>
 

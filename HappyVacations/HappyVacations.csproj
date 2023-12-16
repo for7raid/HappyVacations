@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
@@ -22,15 +22,14 @@
 	<!-- For WASM, Trim Icons and Emojis Libs, -->
 	<!-- but not Core and Shared libs -->
 	<ItemGroup>
-		<TrimmerRootAssembly Include="Microsoft.Fast.Components.FluentUI" />
+		<TrimmerRootAssembly Include="Microsoft.FluentUI.AspNetCore.Components" />
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.14" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.14" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.Fast.Components.FluentUI" Version="3.3.0" />
-		<PackageReference Include="Microsoft.Fast.Components.FluentUI.Emojis" Version="3.3.0" />
-		<PackageReference Include="Microsoft.Fast.Components.FluentUI.Icons" Version="3.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.2.0" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
