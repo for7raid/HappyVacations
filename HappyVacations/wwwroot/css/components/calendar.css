@@ -37,15 +37,15 @@
 
 .fluent-calendar .previous-month:hover svg, 
 .fluent-calendar .next-month:hover svg {
-    fill: var(--gray-7) !important;
+    fill: var(--gray-8) !important;
 }
 
 .fluent-datepicker-popup .week-day {
-    color: var(--gray-7) !important;
+    color: var(--gray-8) !important;
 }
 
 .fluent-datepicker-popup .title {
-    color: var(--gray-7) !important;
+    color: var(--gray-8) !important;
     width: auto !important;
 }
 

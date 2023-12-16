@@ -32,9 +32,12 @@
                 <FluentCalendar PickerMonth="item"
                                 ValueChanged="@(async v=> await EditDateCell.InvokeAsync(new Tuple<Employee, DateTime>(SelectedEmployee, v.Value)))">
                     <DaysTemplate>
-                        <span class="@GetCellClass(context.Date)">
-                            @context.DayNumber
-                        </span>
+                        @if (!context.IsInactive)
+                        {
+                            <span class="@GetCellClass(context.Date)">
+                                @context.DayNumber
+                            </span>
+                        }
                     </DaysTemplate>
                 </FluentCalendar>
             }

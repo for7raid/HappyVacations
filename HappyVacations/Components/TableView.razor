@@ -31,7 +31,7 @@
                 <th>Инд</th>
                 @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                 {
-                    <th class="@GetHeaderCellClass(item)">@item.ToString("dd")</th>
+                    <th class="@GetHeaderCellClass(item) @(item.Day == 1 ? "month-start" :string.Empty)">@item.ToString("dd")</th>
                 }
                 <th>Раб. дней</th>
                 <th>SP на фичи</th>
@@ -53,7 +53,7 @@
                     @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                     {
 
-                        <td></td>
+                        <td  class="@(item.Day == 1 ? "month-start" :string.Empty)" ></td>
                     }
                     <td></td>
                     <td></td>
@@ -86,7 +86,7 @@
                             var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
 
-                            <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) title="@error.Message">
+                            <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) class="@(item.Day == 1 ? "month-start" :string.Empty)" title="@error.Message">
                                 <span class="badge @GetCellClass(day) @(error.HasError ? " error":"")">
                                     @if (day is not null)
                                     {
@@ -116,7 +116,7 @@
 
                             var count = role.Count(e => e.Items.Any(i => i.Date.Date == item && !i.Cancelled && i.ItemType == VacationItemType.Regular));
 
-                            <td>
+                            <td class="@(item.Day == 1 ? "month-start" :string.Empty)">
                                 <span class="warning-@count">
                                     @(count > 1 ? count.ToString() : string.Empty)
                                 </span>
