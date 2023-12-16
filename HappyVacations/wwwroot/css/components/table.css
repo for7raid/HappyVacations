@@ -27,7 +27,7 @@ tr {
 
         tr td.month-start,
         tr th.month-start {
-            border-left: 1px double var(--black);
+            border-left: 1px double var(--gray-5);
         }
 
     tr:first-child {

@@ -2,7 +2,9 @@
     <table class="planner-table">
         <thead>
             <tr>
-                <th></th>
+                <th>
+                    <FluentTextField @bind-Value=FilterText AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..."/>
+                </th>
                 <th>Месяц</th>
                 <th>
                     <FluentIcon Id="myLongText" Icon="Icons.Regular.Size24.QuestionCircle" />
@@ -12,7 +14,7 @@
                                    MaxWidth="400px"
                                    Position="TooltipPosition.Top">
 
-                        Индект зарплаты, условно показывает, в какие месяца выгоднее ходить в отпуск.
+                        Индекс зарплаты, условно показывает, в какие месяца выгоднее ходить в отпуск.
                         Подробнее на странице проекта <a target="_blank" href="https://github.com/for7raid/HappyVacations#%D1%80%D0%B0%D1%81%D1%87%D1%91%D1%82-%D0%B8%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%D0%B0-%D0%B7%D0%B0%D1%80%D0%BF%D0%BB%D0%B0%D1%82%D1%8B">https://github.com/for7raid/HappyVacations</a>
                     </FluentTooltip>
                 </th>
@@ -39,7 +41,7 @@
         </thead>
         <tbody>
 
-            @foreach (var role in Employees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
+            @foreach (var role in FilteredEmployees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
             {
                 double availableSpByRole = 0;
 
@@ -157,6 +159,10 @@
 
     [Parameter]
     public EventCallback<Tuple<Employee, DateTime>> EditDateCell { get; set; }
+
+    string FilterText = string.Empty;
+
+    IEnumerable<Employee> FilteredEmployees => Employees.Where(e => e.Name.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase) || (e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase) ?? false));
 
     string GetHeaderCellClass(DateTime date)
     {
