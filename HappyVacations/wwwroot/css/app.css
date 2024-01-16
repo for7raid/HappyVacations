@@ -3,6 +3,7 @@
 @import url('./components/calendar.css');
 @import url('./components/input.css');
 @import url('./components/table.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 
 :root {
     --black: #000;
@@ -127,11 +128,6 @@ body {
     color: var(--neutral-foreground-rest);
 }
 
-main {
-    padding: 0 1.5rem;
-}
-
-
 #blazor-error-ui {
     background: light#FBC756;
     bottom: 0;
@@ -159,40 +155,7 @@ main {
 }
 
     .blazor-error-boundary::before {
-        content: "An error has occurred. "
-    }
-
-.loading-progress {
-    position: relative;
-    display: block;
-    width: 8rem;
-    height: 8rem;
-    margin: 20vh auto 1rem auto;
-}
-
-    .loading-progress circle {
-        fill: none;
-        stroke: #e0e0e0;
-        stroke-width: 0.6rem;
-        transform-origin: 50% 50%;
-        transform: rotate(-90deg);
-    }
-
-        .loading-progress circle:last-child {
-            stroke: #1b6ec2;
-            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
-            transition: stroke-dasharray 0.05s ease-in-out;
-        }
-
-.loading-progress-text {
-    position: absolute;
-    text-align: center;
-    font-weight: bold;
-    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
-}
-
-    .loading-progress-text:after {
-        content: var(--blazor-load-percentage-text, "Loading");
+        content: "An error has occurred."
     }
 
 .prompt {
@@ -264,6 +227,39 @@ main {
     color: inherit !important;
     border: none !important;
     background: inherit !important;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: var(--red) transparent var(--green-1) transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .legend {
@@ -346,4 +342,75 @@ main {
     .legend {
         flex-flow: wrap;
     }
+}
+
+
+
+
+
+
+
+
+
+.center-xy-404 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+}
+
+.container-404 {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    background-color: #000;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    animation: getonpage 2s ease-in-out;
+}
+
+@keyframes getonpage {
+    from {
+        background-color: #fff;
+    }
+
+    to {
+        background-color: #000;
+    }
+}
+
+.copy-container-404 {
+    text-align: center;
+}
+
+.copy-container-404 p {
+    color: #fff;
+    font-size: 24px;
+    letter-spacing: .2px;
+    margin: 0;
+}
+
+.handle-404 {
+    background: #ffe500;
+    width: 14px;
+    height: 24px;
+    top: 0;
+    left: -17px;
+    margin-top: 1px;
+    position: absolute;
+}
+
+#cb-replay-404 {
+    fill: #666;
+    width: 20px;
+    margin: 15px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    overflow: inherit;
+    cursor: pointer;
+}
+
+#cb-replay-404:hover {
+    fill: #888;
 }
