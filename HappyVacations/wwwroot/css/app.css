@@ -3,6 +3,7 @@
 @import url('./components/calendar.css');
 @import url('./components/input.css');
 @import url('./components/table.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 
 :root {
     --black: #000;
@@ -126,11 +127,6 @@ body {
     --elevation: 2;
     color: var(--neutral-foreground-rest);
 }
-
-main {
-    padding: 0 1.5rem;
-}
-
 
 #blazor-error-ui {
     background: light#FBC756;
@@ -346,4 +342,75 @@ main {
     .legend {
         flex-flow: wrap;
     }
+}
+
+
+
+
+
+
+
+
+
+.center-xy-404 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+}
+
+.container-404 {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    background-color: #000;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    animation: getonpage 2s ease-in-out;
+}
+
+@keyframes getonpage {
+    from {
+        background-color: #fff;
+    }
+
+    to {
+        background-color: #000;
+    }
+}
+
+.copy-container-404 {
+    text-align: center;
+}
+
+.copy-container-404 p {
+    color: #fff;
+    font-size: 24px;
+    letter-spacing: .2px;
+    margin: 0;
+}
+
+.handle-404 {
+    background: #ffe500;
+    width: 14px;
+    height: 24px;
+    top: 0;
+    left: -17px;
+    margin-top: 1px;
+    position: absolute;
+}
+
+#cb-replay-404 {
+    fill: #666;
+    width: 20px;
+    margin: 15px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    overflow: inherit;
+    cursor: pointer;
+}
+
+#cb-replay-404:hover {
+    fill: #888;
 }

@@ -3,7 +3,7 @@
 
 <PageTitle>Календарь отпусков @team?.Title</PageTitle>
 
-    @if (team is not null)
+    @if (isTeamLoaded == true && team is not null)
 {
     <div>
         <div class="page-header">
@@ -73,7 +73,20 @@
 
     </div>
 }
-else
+
+    @if (isTeamLoaded == true && team is null)
+{
+    <div class="container-404">
+        <div class="copy-container-404 center-xy-404">
+            <p>
+                404, page not found.
+            </p>
+            <span class="handle-404"></span>
+        </div>
+    </div>
+}
+
+    @if (isTeamLoaded == false)
 {
     <div class="lds-dual-ring"></div>
 }
@@ -87,22 +100,25 @@ else
     public List<CalendarException> CalendarExceptions { get; set; }
 
     public DateTime Start { get; set; } = new DateTime(DateTime.Now.Year, Math.Max(1, DateTime.Now.Month - 1), 1);
-    public DateTime? End { get; set; } = new DateTime(DateTime.Now.Year, 12, 31);// new DateTime(DateTime.Now.Year, 12, 31);
+    public DateTime? End { get; set; } = new DateTime(DateTime.Now.Year, 12, 31);
     public bool listView { get; set; } = true;
 
     [Parameter]
-    public string TeamId { get; set; }
+    public string TeamId { get; set; } = string.Empty;
     [Parameter]
-    public string TeamName { get; set; }
+    public string TeamName { get; set; } = string.Empty;
 
     Team? team;
 
     bool isQuickMenuOpened = false;
+    bool isTeamLoaded = false;
 
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
+
         team = await repository.GetTeam(TeamId, TeamName);
+        isTeamLoaded = true;
         CalendarExceptions = await repository.GetCalendarExpeptions();
 
         Employees = await repository.GetEmployees(TeamId);
