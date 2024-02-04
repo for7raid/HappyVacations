@@ -129,7 +129,6 @@
 
                     </tr>
                 }
-
             }
         </tbody>
     </table>
@@ -140,7 +139,7 @@
 
 @code {
     [Parameter]
-    public List<Employee> Employees { get; set; } = default!;
+    public List<Employee> Employees { get; set; } = new();
 
     [Parameter]
     public IEnumerable<CalendarException> CalendarExceptions { get; set; } = Array.Empty<CalendarException>();
@@ -162,7 +161,18 @@
 
     string FilterText = string.Empty;
 
-    IEnumerable<Employee> FilteredEmployees => Employees.Where(e => e.Name.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase) || (e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase) ?? false));
+
+    IEnumerable<Employee> FilteredEmployees => Employees
+        .Where(
+            e => (
+                e.Name?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
+                ?? false
+            ) || (
+                e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
+                ?? false
+            )
+        );
+
 
     string GetHeaderCellClass(DateTime date)
     {
