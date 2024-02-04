@@ -162,23 +162,17 @@
     string FilterText = string.Empty;
 
 
-    IEnumerable<Employee> FilteredEmployees
-    {
-        get
-        {
-            return (Employees
-                .Where(
-                    e => (
-                        e.Name?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
-                        ?? false
-                    ) || (
-                        e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
-                        ?? false
-                    )
-                )
-            );
-        }
-    }
+    IEnumerable<Employee> FilteredEmployees => Employees
+        .Where(
+            e => (
+                e.Name?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
+                ?? false
+            ) || (
+                e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
+                ?? false
+            )
+        );
+
 
     string GetHeaderCellClass(DateTime date)
     {
