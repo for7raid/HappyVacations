@@ -164,9 +164,11 @@
 
     IEnumerable<Employee> FilteredEmployees => Employees
         .Where(
-            e =>(
+            e => (
                 e.Name?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
-                ?? e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
+                ?? false
+            ) || (
+                e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
                 ?? false
             )
         );
