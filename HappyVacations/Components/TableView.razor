@@ -139,7 +139,7 @@
 
 @code {
     [Parameter]
-    public List<Employee> Employees { get; set; } = default!;
+    public List<Employee> Employees { get; set; } = new();
 
     [Parameter]
     public IEnumerable<CalendarException> CalendarExceptions { get; set; } = Array.Empty<CalendarException>();
@@ -166,7 +166,7 @@
     {
         get
         {
-            return ((Employees ?? Enumerable.Empty<Employee>())
+            return (Employees
                 .Where(
                     e => (
                         e.Name?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
