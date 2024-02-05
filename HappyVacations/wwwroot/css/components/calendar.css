@@ -21,7 +21,7 @@
 .fluent-datepicker-popup .day[selected],
 .fluent-calendar:not([readonly]) .day:not([disabled]):not([inactive]):not([today]):hover {
     background: var(--primary) !important;
-    border: 1px solid;
+    border: 1px solid transparent;
     border-radius: 50% !important;
     color: #fff;
 }
@@ -51,4 +51,8 @@
 
 .fluent-calendar .change-month {
     margin-right: 0 !important;
+}
+
+.calendar .change-period {
+    display: none !important;
 }
