@@ -14,6 +14,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<IRepository, FirestoreReporistory>();
 //builder.Services.AddScoped<IRepository, InMemoryRepository>();
 builder.Services.AddScoped<VacationCalculatorService>();
+builder.Services.AddSingleton<AppTheme>();
 
 builder.Services.AddFluentUIComponents();
 

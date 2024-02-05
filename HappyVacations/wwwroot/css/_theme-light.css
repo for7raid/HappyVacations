@@ -1,0 +1,7 @@
+#wrapper.light {
+    background: #F4F7FF;
+}
+
+#wrapper.light .page-header {
+    background: var(--white);
+}

@@ -7,23 +7,23 @@
     <title>Календарь отпусков</title>
     <base href="/" />
     <!--<link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />-->
+    <link href="_content/Microsoft.FluentUI.AspNetCore.Components/css/reboot.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="HappyVacations.styles.css" rel="stylesheet" />
     <!--<link href="manifest.json" rel="manifest" />-->
 </head>
 
-
-<fluent-design-theme mode="light" primary-color="#ff0000" />
-
 <body>
     <div id="app"></div>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
+    <!-- <div id="blazor-error-ui">
+        <span>
+            An unhandled error has occurred.
+            <a href="" class="reload">Reload</a>
+        </span> 
         <a class="dismiss">🗙</a>
-    </div>
+    </div> -->
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <!--<script>navigator.serviceWorker.register('service-worker.js');</script>-->
     <!-- Start Single Page Apps for GitHub Pages -->
@@ -83,6 +83,24 @@
             }
         });
 
+    </script>
+
+    <script>
+        window.setDarkMode = (isDarkMode) => {
+            if (isDarkMode) {
+                window.document.getElementById("wrapper").classList.add("dark")
+            } else {
+                window.document.getElementById("wrapper").classList.remove("dark");
+            }
+        }
+        const prefersDarkQuery = "(prefers-color-scheme: dark)";
+
+        window.isBrowserDarkMode = () => window.matchMedia(prefersDarkQuery).matches;
+        window.addThemeEventListener = (dotnet) => {
+            window.matchMedia(prefersDarkQuery).addEventListener("change", event => {
+                dotnet.invokeMethodAsync("SetDarkMode", event.matches);
+            });
+        }
     </script>
 </body>
 
