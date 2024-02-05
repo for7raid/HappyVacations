@@ -113,10 +113,6 @@ SP = Рабочие часы / Часов в story point - Коэф наклад
 
 https://for7raid.github.io/HappyVacations/sdf323asdf/adacta
 
-# UI-Kit
-
-https://www.figma.com/file/KbKQ3vf6NVPkJFm4MbQFCW/UI-Kit-HappyVacation?type=design&node-id=0-1&mode=design
-
 ---------
 
 # FAQ

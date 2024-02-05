@@ -1,11 +1,10 @@
 ﻿@inherits LayoutComponentBase
-@inject AppTheme theme
 
 @*<link href="_content/Microsoft.Fast.Components.FluentUI/css/variables.css" rel="stylesheet" />*@
 
 <PageTitle>Календарь отпусков</PageTitle>
 
-<div id="wrapper" class='@(theme.IsDarkMode ? "dark" : "light")'>
+<div class="wrapper">
   @* <FluentHeader class="siteheader">
         <a href="/">Home</a>
         <a href="teams">Список команд</a>
@@ -14,7 +13,7 @@
         @* <div class="navigation">
             <NavMenu />
         </div> *@ 
-        <FluentBodyContent class="content">
+        <FluentBodyContent class="content px-4">
 
             <ErrorBoundary>
                 <ChildContent>
