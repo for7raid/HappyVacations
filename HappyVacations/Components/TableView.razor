@@ -1,5 +1,5 @@
 ﻿<div class="valcation-table">
-    <table class="planner-table" cellpadding="0" cellspacing="0" border="0">
+    <table class="planner-table">
         <thead>
             <tr>
                 <th>
@@ -27,7 +27,6 @@
                 <th></th>
             </tr>
             <tr>
-
                 <th>Имя</th>
                 <th>Дней</th>
                 <th>Инд</th>
@@ -46,36 +45,27 @@
                 double availableSpByRole = 0;
 
                 <tr>
-
                     <td style="text-align:center;"><b>@role.Key</b></td>
                     <td></td>
                     <td></td>
-
-
                     @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                     {
-
                         <td  class="@(item.Day == 1 ? "month-start" :string.Empty)" ></td>
                     }
                     <td></td>
                     <td></td>
-
                 </tr>
-
-
                 @foreach (var employee in role)
                 {
                     double availableSpByEmployee = VacationCalculatorService.GetAvailableSpDays(employee, Team, Start, End, CalendarExceptions);
                     availableSpByRole += availableSpByEmployee;
 
                     <tr>
-
                         <td>
                             <div class="d-flex justify-content-between">
                                 @employee.Name
                                 <FluentIcon Icon="Icons.Regular.Size16.Edit" Color="@Color.Accent" OnClick="@(async _ => await EditEmployee.InvokeAsync(employee))" />
                             </div>
-
                         </td>
 
                         <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>

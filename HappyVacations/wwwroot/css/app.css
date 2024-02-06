@@ -54,6 +54,11 @@
 
 }
 
+::selection {
+    color: #fff; /* Цвет текста */
+    background: var(--pink); /* Цвет фона */
+}
+
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
