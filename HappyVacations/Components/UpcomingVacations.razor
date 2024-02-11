@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>
-                    <FluentTextField @bind-Value=FilterText AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..."/>
+                    <FluentTextField @bind-Value="_filterText" AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..."/>
                 </th>
                 @for (var item = Start; item <= End; item = item.AddMonths(1))
                 {
@@ -44,7 +44,6 @@
                         @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                         {
                             var day = employee.Items.FirstOrDefault(i => i.Date.Date == item);
-                            var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
 
                             <td title="@error.Message" class="@(item.Day == 1 ? "month-start" :string.Empty)">
@@ -63,7 +62,6 @@
     </table>
 </div>
 
-@inject IDialogService DialogService
 @inject VacationCalculatorService VacationCalculatorService
 
 @code {
@@ -74,24 +72,21 @@
     [Parameter]
     public List<Employee> Employees { get; set; } = default!;
 
-    public DateTime Start { get; set; } = getMondayDate();
+    public DateTime Start { get; set; } = GetMondayDate();
 
-    public DateTime End { get; set; } = getEndDateOfPeriod();
+    public DateTime End { get; set; } = GetEndDateOfPeriod();
 
-    string FilterText = string.Empty;
+    private string _filterText = string.Empty;
 
     IEnumerable<Employee> FilteredEmployees => Employees
-        .Where(
-            e => (
-                e.Name?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
-                ?? false
-            ) || (
-                e.Role?.Contains(FilterText, StringComparison.InvariantCultureIgnoreCase)
-                ?? false
-            )
-        );
+        .Where(e =>
+           ((e.Name?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false) || 
+            (e.Role?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false)))
+        .Where(e => e.Items.Any(item => item.Date >= Start && item.Date <= End))
+        .OrderBy(e => e.Name)
+        .ToList();
     
-    static DateTime getMondayDate ()
+    static DateTime GetMondayDate ()
     {
         DateTime currentDate = DateTime.Today;
         DayOfWeek currentDay = currentDate.DayOfWeek;
@@ -100,9 +95,9 @@
         return currentDate.AddDays(-daysToSubtract);
     }
 
-    static DateTime getEndDateOfPeriod()
+    static DateTime GetEndDateOfPeriod()
     {
-        DateTime startDate = getMondayDate();
+        DateTime startDate = GetMondayDate();
         return startDate.AddDays(28);
     }
 

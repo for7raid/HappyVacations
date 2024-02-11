@@ -6,7 +6,7 @@
     --fill-color: var(--gray-1);
 
     --neutral-fill-input-rest: var(--gray-2);
-    --neutral-foreground-rest: var(--gray-5);
+    --neutral-foreground-rest: var(--gray-6);
 
     --neutral-fill-input-hover: var(--gray-3);
     --neutral-stroke-input-hover: linear-gradient(var(--gray-3) calc(100% - 1px), var(--gray-3) calc(100% - 1px), var(--gray-3));
