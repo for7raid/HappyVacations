@@ -277,39 +277,6 @@ div.change-period {
     }
 }
 
-.legend {
-    display: flex;
-    gap: 10px;
-}
-
-    .legend span {
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        border-radius: 50%;
-        text-align: center;
-    }
-
-    .legend .Regular {
-        background: var(--green-3);
-        color: var(--white);
-    }
-
-    .legend .DonorDay {
-        color: var(--black);
-        background: #FBC756;
-    }
-
-    .legend .NonPayed {
-        color: var(--black);
-        background: var(--gray-6);
-    }
-
-    .legend .error {
-        background: var(--state-error);
-        color: white;
-    }
-
 @media (max-width: 968px) {
 
     .page-header {

@@ -1,7 +1,24 @@
 ﻿.valcation-table {
     overflow: auto;
-    margin: 0;
-}
+    max-height: 700px; /* set the maximum height of the table */
+  }
+  
+  .planner-table thead tr:nth-child(1) th,
+  .planner-table thead th:last-child {
+    position: sticky;
+    top: 0;
+  }
+
+  .planner-table thead tr:nth-child(2) th,
+  .planner-table td:nth-last-child(2) {
+    position: sticky;
+    top: 52px;
+  }
+
+  .planner-table thead tr:nth-child(2) th:nth-last-child(2),
+  .planner-table thead th:last-child {
+    z-index: 9;
+  }
 
     .valcation-table th:nth-child(1),
     .valcation-table td:nth-child(1) {
