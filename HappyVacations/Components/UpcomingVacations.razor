@@ -1,0 +1,158 @@
+﻿<div class="valcation-table">
+    <table class="planner-table">
+        <thead>
+            <tr>
+                <th>
+                    <FluentTextField @bind-Value="_filterText" AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..." />
+                </th>
+                @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                {
+                    @if (item.Day == Start.Day || item.Day == 1)
+                    {
+                        <th colspan="@GetCollSpanNumber(Start, End, item)">@item.ToString("MMMM")</th>
+                    }
+                }
+            </tr>
+            <tr>
+                <th>Имя</th>
+                <th>Дней</th>
+                @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                {
+                    <th class="@GetHeaderCellClass(item) @(item.Day == 1 ? "month-start" : string.Empty)">@item.ToString("dd")</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var role in FilteredEmployees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
+            {
+                <tr>
+                    <td style="text-align:center;"><b>@role.Key</b></td>
+                    <td></td>
+                    @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                    {
+                        <td class="@(item.Day == 1 ? "month-start" : string.Empty)"></td>
+                    }
+                </tr>
+                @foreach (var employee in role)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                @employee.Name
+                            </div>
+                        </td>
+                        <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
+                        @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                        {
+                            var day = employee.Items.FirstOrDefault(i => i.Date.Date == item);
+                            var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
+
+                            <td title="@error.Message" class="@(item.Day == 1 ? "month-start" : string.Empty)">
+                                <span class="badge @GetCellClass(day) @(error.HasError ? " error" : "")">
+                                    @if (day is not null)
+                                    {
+                                        @day
+                                    }
+                                </span>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@inject VacationCalculatorService VacationCalculatorService
+
+@code {
+
+    [Parameter]
+    public IEnumerable<CalendarException> CalendarExceptions { get; set; } = Array.Empty<CalendarException>();
+
+    [Parameter]
+    public List<Employee> Employees { get; set; } = default!;
+
+    public DateTime Start { get; set; } = GetMondayDate();
+
+    public DateTime End { get; set; } = GetEndDateOfPeriod();
+
+    private string _filterText = string.Empty;
+
+    IEnumerable<Employee> FilteredEmployees => Employees
+        .Where(e =>
+           ((e.Name?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+            (e.Role?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false)))
+        .Where(e => e.Items.Any(item => item.Date >= Start && item.Date <= End))
+        .OrderBy(e => e.Name)
+        .ToList();
+
+    string GetCollSpanNumber(DateTime start, DateTime end, DateTime item)
+    {
+        if (item.Month == start.Month && item.Month == end.Month)
+        {
+            return (end - start).Days.ToString();
+        }
+        else if (item.Month == start.Month)
+        {
+            return (DateTime.DaysInMonth(start.Year, start.Month) - start.Day + 2).ToString();
+        }
+        else if (item.Month == end.Month)
+        {
+            return end.Day.ToString();
+        }
+        else
+        {
+            return DateTime.DaysInMonth(item.Year, item.Month).ToString();
+        }
+    }
+
+    static DateTime GetMondayDate()
+    {
+        DateTime currentDate = DateTime.Today;
+        DayOfWeek currentDay = currentDate.DayOfWeek;
+        int daysToSubtract = (int)currentDay - (int)DayOfWeek.Monday;
+
+        return currentDate.AddDays(-daysToSubtract);
+    }
+
+    static DateTime GetEndDateOfPeriod()
+    {
+        DateTime startDate = GetMondayDate();
+        return startDate.AddDays(27);
+    }
+
+    string GetHeaderCellClass(DateTime date)
+    {
+        var exception = CalendarExceptions.FirstOrDefault(d => d.Date.Date == date.Date);
+
+        if (exception is not null)
+        {
+            return exception.ExceptionType == CalendarExceptionType.Weekend ? "weekend" : string.Empty;
+        }
+
+        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+        {
+            return "weekend";
+        }
+
+        return string.Empty;
+    }
+
+    string GetCellClass(VacationItem? item)
+    {
+        if (item is not null)
+        {
+            if (item.Cancelled)
+            {
+                return string.Empty;
+            }
+
+            return item.ItemType.ToString();
+        }
+
+        return string.Empty;
+    }
+
+}
