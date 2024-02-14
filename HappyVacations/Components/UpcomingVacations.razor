@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <th>
-                    <FluentTextField @bind-Value="_filterText" AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..."/>
+                    <FluentTextField @bind-Value="_filterText" AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..." />
                 </th>
                 @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                 {
@@ -24,42 +24,42 @@
         </thead>
         <tbody>
 
-        @foreach (var role in FilteredEmployees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
-        {
-            <tr>
-                <td style="text-align:center;"><b>@role.Key</b></td>
-                <td></td>
-                @for (var item = Start.Date; item <= End; item = item.AddDays(1))
-                {
-                    <td class="@(item.Day == 1 ? "month-start" : string.Empty)"></td>
-                }
-            </tr>
-            @foreach (var employee in role)
+            @foreach (var role in FilteredEmployees.OrderBy(e => e.Role).ThenBy(e => e.Name).GroupBy(r => r.Role))
             {
                 <tr>
-                    <td>
-                        <div class="d-flex justify-content-between">
-                            @employee.Name
-                        </div>
-                    </td>
-                    <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
+                    <td style="text-align:center;"><b>@role.Key</b></td>
+                    <td></td>
                     @for (var item = Start.Date; item <= End; item = item.AddDays(1))
                     {
-                        var day = employee.Items.FirstOrDefault(i => i.Date.Date == item);
-                        var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
-
-                        <td title="@error.Message" class="@(item.Day == 1 ? "month-start" : string.Empty)">
-                            <span class="badge @GetCellClass(day) @(error.HasError ? " error" : "")">
-                                @if (day is not null)
-                                {
-                                    @day
-                                }
-                            </span>
-                        </td>
+                        <td class="@(item.Day == 1 ? "month-start" : string.Empty)"></td>
                     }
                 </tr>
+                @foreach (var employee in role)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                @employee.Name
+                            </div>
+                        </td>
+                        <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
+                        @for (var item = Start.Date; item <= End; item = item.AddDays(1))
+                        {
+                            var day = employee.Items.FirstOrDefault(i => i.Date.Date == item);
+                            var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
+
+                            <td title="@error.Message" class="@(item.Day == 1 ? "month-start" : string.Empty)">
+                                <span class="badge @GetCellClass(day) @(error.HasError ? " error" : "")">
+                                    @if (day is not null)
+                                    {
+                                        @day
+                                    }
+                                </span>
+                            </td>
+                        }
+                    </tr>
+                }
             }
-        }
         </tbody>
     </table>
 </div>
@@ -82,7 +82,7 @@
 
     IEnumerable<Employee> FilteredEmployees => Employees
         .Where(e =>
-           ((e.Name?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false) || 
+           ((e.Name?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
             (e.Role?.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase) ?? false)))
         .Where(e => e.Items.Any(item => item.Date >= Start && item.Date <= End))
         .OrderBy(e => e.Name)
@@ -108,7 +108,7 @@
         }
     }
 
-    static DateTime GetMondayDate ()
+    static DateTime GetMondayDate()
     {
         DateTime currentDate = DateTime.Today;
         DayOfWeek currentDay = currentDate.DayOfWeek;
@@ -120,7 +120,7 @@
     static DateTime GetEndDateOfPeriod()
     {
         DateTime startDate = GetMondayDate();
-        return startDate.AddDays(28);
+        return startDate.AddDays(27);
     }
 
     string GetHeaderCellClass(DateTime date)
