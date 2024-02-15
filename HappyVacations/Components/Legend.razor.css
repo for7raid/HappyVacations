@@ -10,7 +10,7 @@
   text-align: center;
 }
 .legend .Regular {
-  background: var(--white);
+  background: var(--green-3);
   color: var(--white);
 }
 .legend .DonorDay {
