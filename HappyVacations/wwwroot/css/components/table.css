@@ -8,7 +8,6 @@ table {
 th {
     color: var(--gray-3);
     background: var(--gray-8);
-    font-weight: normal;
     text-align: left;
     position: sticky;
     padding: 0.5rem 0.5rem;
@@ -103,6 +102,6 @@ tr {
   }
 
 .valcation-table td span.error {
-  background: var(--state-error);
-  color: white;
+  background-color: #f2dede;
+  color: #b52524;
 }

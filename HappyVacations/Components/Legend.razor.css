@@ -22,8 +22,8 @@
   background: var(--gray-6);
 }
 .legend .error {
-  background: var(--state-error);
-  color: white;
+  background: var(--red-light);
+  color: var(--red);
 }
 
 /*# sourceMappingURL=Legend.razor.css.map */
