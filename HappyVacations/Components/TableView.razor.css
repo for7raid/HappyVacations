@@ -1,6 +1,26 @@
-﻿.valcation-table {
+﻿.componentFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.valcation-table {
     overflow: auto;
-    max-height: 700px; /* set the maximum height of the table */
+    max-height: 600px; /* set the maximum height of the table */
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .valcation-table th,
+  .valcation-table td {
+    
+  }
+  
+  .dark .valcation-table td.weekend {
+    background: #3727277d !important;
+  }
+  
+  .valcation-table th {
+    font-weight: bold;
   }
   
   .planner-table thead tr:nth-child(1) th,
@@ -78,11 +98,3 @@
 .valcation-table tr td:last-child {
     border-right: none;
 }
-
-/* .valcation-table th:nth-child(-n + 5),
-.valcation-table td:nth-child(-n + 5) {
-    position: sticky;
-    right: 50;
-    width: 90px;
-    min-width: 90px;
-} */
