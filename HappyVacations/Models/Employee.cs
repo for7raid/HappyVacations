@@ -12,5 +12,8 @@ namespace HappyVacations.Models
         public string Name { get; set; } = default!;
         public string? Role { get; set; }
         public HashSet<VacationItem> Items { get; set; } = new();
+
+        public DateTime? HireDate { get; set; }
+        public DateTime? FireDate { get; set; }
     }
 }

@@ -95,14 +95,15 @@ namespace HappyVacations.Services
             return GetWorkDaysInPeriod(employee, month, end, CalendarExceptions);
         }
 
-        public double GetAvailableSpDays(Employee employee, Team team, DateTime start, DateTime end, IEnumerable<CalendarException> CalendarExceptions)
+        public int GetAvailableSpDays(Employee employee, Team team, DateTime start, DateTime end, IEnumerable<CalendarException> CalendarExceptions)
         {
-            var workHoursTotal = GetWorkDaysInPeriod(employee, start, end, CalendarExceptions);
-            var teamHoursPerSP = team.HoursPerSP;
-            var teamOverheads = team.Overheads;
-            var teamOperatingExpenses = team.OperatingExpenses;
+            var workHoursTotal = (double)GetWorkDaysInPeriod(employee, start, end, CalendarExceptions) * 8;
+            var teamHoursPerSP = (double)team.HoursPerSP;
+            var teamOverheads = (double)team.Overheads;
+            var teamOperatingExpenses = (double)team.OperatingExpenses;
             
-            return double.Round(workHoursTotal / teamHoursPerSP * (1 - teamOverheads / 100) * (1 - teamOperatingExpenses / 100), 2);
+            var sp = (int)double.Round(workHoursTotal / teamHoursPerSP * (1 - teamOverheads / 100) * (1 - teamOperatingExpenses / 100), 0);
+            return sp;
         }
 
         private void FillWorkDayByMonth(DateTime month, IEnumerable<CalendarException> CalendarExceptions)

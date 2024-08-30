@@ -3,7 +3,7 @@
 
 <PageTitle>Календарь отпусков @team?.Title</PageTitle>
 
-    @if (isTeamLoaded == false)
+@if (isTeamLoaded == false)
 {
     <div class="lds-dual-ring"></div>
 }
@@ -19,20 +19,20 @@
         <div class="page-header">
 
             <FluentLabel Typo="Typography.PageTitle">@team.Title</FluentLabel>
-                
+
             @if (listView != "3")
             {
                 <div class="d-flex align-items-center periodSelectorSection">
                     Период с
 
-                    <MyFluentMonthPicker Value=Start ValueChanged="@(d=> Start = new DateTime(d.Value.Year, d.Value.Month, 1))"></MyFluentMonthPicker> по
-                    <MyFluentMonthPicker Value=End ValueChanged="@(d=> End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)))" />
+                    <MyFluentMonthPicker Value=Start ValueChanged="@(async d=> { Start = new DateTime(d.Value.Year, d.Value.Month, 1); await OnDateChanged(); })"></MyFluentMonthPicker> по
+                    <MyFluentMonthPicker Value=End ValueChanged="@(async d=>  {End = new DateTime(d.Value.Year, d.Value.Month, DateTime.DaysInMonth(d.Value.Year, d.Value.Month)); await OnDateChanged();})" />
 
                     <FluentMenuButton Text="Быстрый выбор периода" Items="@quickItems" OnMenuChanged="HandleOnQuickMenuChanged"></FluentMenuButton>
 
                 </div>
             }
-            
+
             <div class="d-flex align-items-center employeesViewModeSection">
 
                 <FluentLabel Class="mr-1">Вид</FluentLabel>
@@ -56,7 +56,9 @@
                               class="ml-1">
                     <FluentIcon Value="@(new DemoIcons.Size20.GitHub())" Color="Color.FillInverse" />
                 </FluentAnchor>
-
+                <FluentLabel Class="mr-1 ml-1">
+                    @typeof(HappyVacations.App).Assembly.GetName().Version
+                </FluentLabel>
             </div>
         </div>
 
@@ -114,7 +116,8 @@
         isTeamLoaded = true;
         CalendarExceptions = await repository.GetCalendarExpeptions();
 
-        Employees = await repository.GetEmployees(TeamId);
+        await OnDateChanged();
+
     }
 
     private async Task AddNewEmployee()
@@ -152,7 +155,7 @@
 
     private async Task EditEmployee(Employee employee)
     {
-        var item = new Employee() { Name = employee.Name, Role = employee.Role };
+        var item = new Employee() { Name = employee.Name, Role = employee.Role, HireDate = employee.HireDate, FireDate = employee.HireDate };
         var viewModel = new EmployeeEditViewModel
             {
                 Item = item,
@@ -179,6 +182,8 @@
         {
             employee.Name = item.Name;
             employee.Role = item.Role;
+            employee.HireDate = item.HireDate;
+            employee.FireDate = item.FireDate;
 
             await repository.SaveEmployee(employee);
         }
@@ -196,7 +201,7 @@
         }
         else
         {
-            var editedItem = new VacationItem() { Date = item.Date, Cancelled = item.Cancelled, ItemType = item.ItemType };
+            var editedItem = new VacationItem() { Date = item.Date, Cancelled = item.Cancelled, ItemType = item.ItemType, CreatedAt = item.CreatedAt };
 
             DialogParameters<VacationItem> parameters = new()
                 {
@@ -274,6 +279,17 @@
                 break;
         }
 
+        await OnDateChanged();
+
+    }
+
+    private async Task OnDateChanged()
+    {
+        var allEmployees = await repository.GetEmployees(TeamId);
+        Employees = allEmployees
+        .Where(e => !e.HireDate.HasValue || e.HireDate.Value <= End)
+        .Where(e => !e.FireDate.HasValue || e.FireDate >= Start)
+        .ToList();
     }
 
 }

@@ -94,7 +94,9 @@ export function initFirebase(window) {
                 Name: doc.get("name"),
                 teamId: doc.get("teamId"),
                 role: doc.get("role"),
-                Items: doc.get("items")
+                Items: doc.get("items"),
+                HireDate: doc.get("hireDate"),
+                FireDate: doc.get("fireDate"),
             }));
             return dataArray;
         },
