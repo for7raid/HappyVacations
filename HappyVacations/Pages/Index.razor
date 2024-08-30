@@ -137,7 +137,7 @@
                 PrimaryActionEnabled = false,
                 SecondaryActionEnabled = false,
                 Width = "400px",
-                Height = "400px",
+                Height = "450px",
                 Content = viewModel
             };
 
@@ -155,7 +155,7 @@
 
     private async Task EditEmployee(Employee employee)
     {
-        var item = new Employee() { Name = employee.Name, Role = employee.Role, HireDate = employee.HireDate, FireDate = employee.HireDate };
+        var item = new Employee() { Name = employee.Name, Role = employee.Role, HireDate = employee.HireDate, FireDate = employee.FireDate };
         var viewModel = new EmployeeEditViewModel
             {
                 Item = item,
@@ -170,7 +170,7 @@
                 PrimaryActionEnabled = false,
                 SecondaryActionEnabled = false,
                 Width = "400px",
-                Height = "400px",
+                Height = "450px",
                 Content = viewModel
             };
 
