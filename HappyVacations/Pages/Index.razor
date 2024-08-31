@@ -186,6 +186,8 @@
             employee.FireDate = item.FireDate;
 
             await repository.SaveEmployee(employee);
+
+            StateHasChanged();
         }
     }
 

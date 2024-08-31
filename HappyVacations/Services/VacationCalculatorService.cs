@@ -53,9 +53,9 @@ namespace HappyVacations.Services
                 var dayCost = salaryConst / workDaysByMonth[month.ToString("yyyy-MM")];
 
                 var workDaysSalary = dayCost * GetWorkDaysInMonth(employee, month, CalendarExceptions);
-                
+
                 var holidaysSalary = holidayCost * (vacationsByMonth.ContainsKey(month.ToString("yyyy-MM")) ? vacationsByMonth[month.ToString("yyyy-MM")] : 0);
-                
+
                 var monthTotal = workDaysSalary + holidaysSalary;
                 totalSalary += monthTotal;
                 workSalary += salaryConst;
@@ -76,20 +76,22 @@ namespace HappyVacations.Services
                 var vacation = employee.Items.FirstOrDefault(i => !i.Cancelled & i.Date == day & i.ItemType == VacationItemType.Regular);
 
                 var exception = CalendarExceptions.FirstOrDefault(e => e.Date == day);
-                var isWorkDay = day.DayOfWeek != DayOfWeek.Sunday && day.DayOfWeek != DayOfWeek.Saturday && exception is null || ( exception is not null && exception.ExceptionType == CalendarExceptionType.Workday);
+                var isWorkDay = day.DayOfWeek != DayOfWeek.Sunday && day.DayOfWeek != DayOfWeek.Saturday && exception is null ||
+                    (exception is not null && exception.ExceptionType == CalendarExceptionType.Workday);
+                var isOnDuty = (!employee.HireDate.HasValue || employee.HireDate < day) && (!employee.FireDate.HasValue || employee.FireDate > day);
 
-                if (vacation is null && isWorkDay)
+                if (vacation is null && isWorkDay && isOnDuty)
                 {
                     days++;
                 }
 
-                
+
             }
 
             return days;
         }
 
-        public int GetWorkDaysInMonth(Employee employee, DateTime month, IEnumerable<CalendarException> CalendarExceptions) 
+        public int GetWorkDaysInMonth(Employee employee, DateTime month, IEnumerable<CalendarException> CalendarExceptions)
         {
             var end = month.AddMonths(1).AddDays(-1);
             return GetWorkDaysInPeriod(employee, month, end, CalendarExceptions);
@@ -101,7 +103,7 @@ namespace HappyVacations.Services
             var teamHoursPerSP = (double)team.HoursPerSP;
             var teamOverheads = (double)team.Overheads;
             var teamOperatingExpenses = (double)team.OperatingExpenses;
-            
+
             var sp = (int)double.Round(workHoursTotal / teamHoursPerSP * (1 - teamOverheads / 100) * (1 - teamOperatingExpenses / 100), 0);
             return sp;
         }

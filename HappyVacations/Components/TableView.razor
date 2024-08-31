@@ -71,8 +71,12 @@
                             var day = employee.Items.FirstOrDefault(i => i.Date.Date == item);
                             var tuple = new Tuple<Employee, DateTime>(employee, new DateTime(item.Year, item.Month, item.Day));
                             var error = VacationCalculatorService.Validate(employee, day, CalendarExceptions);
+                            var isOnDuty = (!employee.HireDate.HasValue || employee.HireDate < item) && (!employee.FireDate.HasValue || employee.FireDate > item);
 
-                            <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) class="@(item.Day == 1 ? "month-start" :string.Empty) @SetWeekendClass(item)" title="@error.Message">
+
+                            <td @onclick=@(async _=> await EditDateCell.InvokeAsync(tuple)) 
+                                class="@(item.Day == 1 ? "month-start" :string.Empty) @SetWeekendClass(item) @(!isOnDuty ? " fired ": "")" 
+                                title="@error.Message">
                                 <span class="badge @GetCellClass(day) @(error.HasError ? " error":"")">
                                     @if (day is not null)
                                     {
