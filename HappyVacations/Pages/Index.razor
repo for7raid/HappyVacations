@@ -65,13 +65,13 @@
         @if (listView == "1")
         {
             <div class="container">
-                <TableView Employees="@Employees" Start="@Start" End="@End.Value" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
+                <TableView Employees="@Employees" Start="@Start" End="@End" Team="@team" CalendarExceptions="@CalendarExceptions" EditEmployee="EditEmployee" EditDateCell="@EditDateCell" />
             </div>
         }
         else if (listView == "2")
         {
             <div class="container mt-1">
-                <CalendarView Employees="@Employees" Start="@Start" End="@End.Value" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
+                <CalendarView Employees="@Employees" Start="@Start" End="@End" CalendarExceptions="@CalendarExceptions" EditDateCell="@EditDateCell" />
             </div>
         }
         else if (listView == "3")
@@ -95,7 +95,7 @@
     public List<CalendarException> CalendarExceptions { get; set; }
 
     public DateTime Start { get; set; } = new DateTime(DateTime.Now.Year, Math.Max(1, DateTime.Now.Month - 1), 1);
-    public DateTime? End { get; set; } = new DateTime(DateTime.Now.Year, 12, 31);
+    public DateTime End { get; set; } = new DateTime(DateTime.Now.Year, 12, 31);
     public string listView { get; set; } = "1";
 
     [Parameter]
@@ -237,7 +237,9 @@
 
     private Dictionary<string, string> quickItems = new Dictionary<string, string>()
     {
-        {"currentMonth","Текущий месяц + 1"},
+        {"currentMonthPlus1","Текущий месяц + 1"},
+        {"NextMonth","Следующий месяц"},
+        {"PlusMonth","+1 месяц"},
         //{"currentQuarter","Текущий квартал"},
         {"nextQuarter","Следующий квартал"},
         {"tillCurrentYear","До конца года"},
@@ -251,15 +253,32 @@
 
         switch (args.Id)
         {
-            case "currentMonth":
+            case "currentMonthPlus1":
                 Start = new DateTime(currentYear, DateTime.Now.Month, 1);
                 End = Start.AddMonths(2).AddDays(-1);
+                break;
+
+            case "NextMonth":
+                if (DateTime.Now.Month < 12)
+                {
+                    Start = new DateTime(currentYear, DateTime.Now.Month + 1, 1);
+                }
+                else
+                {
+                    Start = new DateTime(currentYear + 1, 1, 1);
+                }
+                End = Start.AddMonths(1).AddDays(-1);
+                break;
+
+            case "PlusMonth":
+                Start = Start.AddMonths(1);
+                End = End.AddMonths(1);
                 break;
 
             case "nextQuarter":
                 if (currentQuarter < 4)
                 {
-                    Start = new DateTime(currentYear, (currentQuarter + 1) * 3, 1);
+                    Start = new DateTime(currentYear, (currentQuarter * 3) + 1, 1);
                     End = Start.AddMonths(3).AddDays(-1);
                 }
                 else
