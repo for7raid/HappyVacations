@@ -78,7 +78,7 @@ namespace HappyVacations.Services
                 var exception = CalendarExceptions.FirstOrDefault(e => e.Date == day);
                 var isWorkDay = day.DayOfWeek != DayOfWeek.Sunday && day.DayOfWeek != DayOfWeek.Saturday && exception is null ||
                     (exception is not null && exception.ExceptionType == CalendarExceptionType.Workday);
-                var isOnDuty = (!employee.HireDate.HasValue || employee.HireDate < day) && (!employee.FireDate.HasValue || employee.FireDate > day);
+                var isOnDuty = (!employee.HireDate.HasValue || employee.HireDate <= day) && (!employee.FireDate.HasValue || employee.FireDate >= day);
 
                 if (vacation is null && isWorkDay && isOnDuty)
                 {
