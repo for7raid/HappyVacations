@@ -72,8 +72,9 @@ tr {
   color: var(--gray-1);
 }
 
-.valcation-table td span.NonPayed {
-  background: var(--gray-6);
+.valcation-table td span.NonPayed,
+.valcation-table td span.Sick {
+    background: var(--gray-6);
 }
 
 .valcation-table td span.warning-2 {

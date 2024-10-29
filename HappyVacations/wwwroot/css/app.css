@@ -219,7 +219,8 @@ td, th {
 }
 
 
-.calendarView .fluent-calendar .day .NonPayed {
+.calendarView .fluent-calendar .day .NonPayed,
+.calendarView .fluent-calendar .day .Sick {
     background: var(--gray-6);
     width: var(--calendar-cell-size);
     height: var(--calendar-cell-size);

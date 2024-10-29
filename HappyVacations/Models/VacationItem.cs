@@ -24,6 +24,7 @@
                 VacationItemType.Regular => "О",
                 VacationItemType.DonorDay => "Д",
                 VacationItemType.NonPayed => "С",
+                VacationItemType.Sick => "Б",
                 _ => "O"
             };
         }
@@ -33,6 +34,7 @@
     {
         Regular = 0,
         NonPayed = 1,
-        DonorDay = 2
+        DonorDay = 2,
+        Sick = 3,
     }
 }
