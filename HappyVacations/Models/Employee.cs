@@ -15,5 +15,7 @@ namespace HappyVacations.Models
 
         public DateTime? HireDate { get; set; }
         public DateTime? FireDate { get; set; }
+
+        public int YearPlan { get; set; }
     }
 }

@@ -155,7 +155,14 @@
 
     private async Task EditEmployee(Employee employee)
     {
-        var item = new Employee() { Name = employee.Name, Role = employee.Role, HireDate = employee.HireDate, FireDate = employee.FireDate };
+        var item = new Employee()
+            {
+                Name = employee.Name,
+                Role = employee.Role,
+                HireDate = employee.HireDate,
+                FireDate = employee.FireDate,
+                YearPlan = employee.YearPlan
+            };
         var viewModel = new EmployeeEditViewModel
             {
                 Item = item,
@@ -184,6 +191,7 @@
             employee.Role = item.Role;
             employee.HireDate = item.HireDate;
             employee.FireDate = item.FireDate;
+            employee.YearPlan = item.YearPlan;
 
             await repository.SaveEmployee(employee);
 

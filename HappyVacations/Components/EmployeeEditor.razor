@@ -14,6 +14,8 @@
         <FluentDatePicker Label="Дата приёма" @bind-Value="@Content.Item.HireDate" />
         <FluentDatePicker Label="Дата увольнения" @bind-Value="@Content.Item.FireDate" />
 
+        <FluentNumberField Label="План дней на год" @bind-Value="@Content.Item.YearPlan"/>
+
         <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent">Сохранить</FluentButton>
     </FluentStack>
 </EditForm>

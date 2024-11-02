@@ -17,6 +17,7 @@
         @if (SelectedEmployee is not null)
         {
             <div class="d-flex">
+                <div class="mr-1">Плановых дней отпуска: <b>@SelectedEmployee.YearPlan</b></div>
                 <div class="mr-1">Отмечено дней отпуска: <b>@VacationCalculatorService.TotalDays(SelectedEmployee, Start, End)</b></div>
                 <div class="mr-1">Зарплатный индекс: <b>@VacationCalculatorService.SalaryIndex(SelectedEmployee, Start, End, CalendarExceptions).ToString("0.00")</b></div>
                 <div class="mr-1">Рабочих дней: <b>@VacationCalculatorService.GetWorkDaysInPeriod(SelectedEmployee, Start, End, CalendarExceptions)</b></div>

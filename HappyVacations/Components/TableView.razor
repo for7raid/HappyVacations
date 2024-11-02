@@ -5,6 +5,7 @@
                 <th>
                     <FluentTextField @bind-Value=FilterText AutoComplete="off" Immediate=true ImmediateDelay="500" Placeholder="Фильтр..."/>
                 </th>
+                <th></th>
                 <th>Месяц</th>
                 <th>
                     <FluentIcon Id="myFirstButton" Icon="Icons.Regular.Size24.QuestionCircle" />
@@ -22,6 +23,7 @@
             </tr>
             <tr>
                 <th>Имя</th>
+                <th>План</th>
                 <th>Дней</th>
                 <th>Инд</th>
                 @for (var item = Start.Date; item <= End; item = item.AddDays(1))
@@ -40,6 +42,7 @@
 
                 <tr>
                     <td style="text-align:center;"><b>@role.Key</b></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     @for (var item = Start.Date; item <= End; item = item.AddDays(1))
@@ -62,6 +65,7 @@
                             </div>
                         </td>
 
+                        <td>@employee.YearPlan</td>
                         <td>@VacationCalculatorService.TotalDays(employee, Start, End)</td>
                         <td>@VacationCalculatorService.SalaryIndex(employee, Start, End, CalendarExceptions).ToString("0.00")</td>
 
@@ -97,6 +101,7 @@
                     <tr>
 
                         <td style="font-style:italic">Пересечения</td>
+                        <td></td>
                         <td></td>
                         <td></td>
 

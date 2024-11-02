@@ -97,6 +97,7 @@ export function initFirebase(window) {
                 Items: doc.get("items"),
                 HireDate: doc.get("hireDate"),
                 FireDate: doc.get("fireDate"),
+                YearPlan: doc.get("yearPlan"),
             }));
             return dataArray;
         },
