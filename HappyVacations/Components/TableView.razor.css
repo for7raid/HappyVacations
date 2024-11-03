@@ -51,7 +51,7 @@
 .valcation-table td:nth-child(1) {
     border-left: none !important;
     position: sticky;
-    left: -1px;
+    left: 0;
     width: 190px;
     min-width: 190px;
     text-align: left;
@@ -60,9 +60,7 @@
 .valcation-table th:nth-child(2),
 .valcation-table td:nth-child(2):not([rowspan]) {
     position: sticky;
-    /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-    /* 0 + 2 + 160 + 2 + 1 */
-    left: 204px;
+    left: 205px;
     width: 40px;
     min-width: 40px;
 }
@@ -70,16 +68,31 @@
 .valcation-table th:nth-child(3),
 .valcation-table td:nth-child(3) {
     position: sticky;
-    /* 1st cell left/right padding + 1st cell width + 1st cell left/right border width */
-    /* 0 + 2 + 160 + 2 + 2 + 80 + 2 + 1 */
-    left: 261px;
+    left: 260px;
     width: 40px;
     min-width: 40px;
 }
 
+.valcation-table th:nth-child(4),
+.valcation-table td:nth-child(4) {
+    position: sticky;
+    left: 320px;
+    width: 40px;
+    min-width: 40px;
+}
+
+/*
+    Для добавления фиксированной колонки в начало таблицы нужно:
+    1. Продублировать 2 селектора выше и инкриментировать значение в скобках. Это номер колонки
+    2. Указать отступ от левого края в свойстве left, где значение - сумма ширины всех колонок от 1 до N
+    3. Добавить к селектрам ниже строку с номером новой колонки, чтобы при перелистывании она перекрывала не фиксированные ячейки при перелистывании
+    4. Profit!
+*/
+
 .valcation-table th:nth-child(1),
 .valcation-table th:nth-child(2),
-.valcation-table th:nth-child(3) {
+.valcation-table th:nth-child(3),
+.valcation-table th:nth-child(4) {
     z-index: 6;
 }
 
